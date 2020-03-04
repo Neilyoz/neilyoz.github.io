@@ -3,6 +3,7 @@ title: 0x01 Promise理解第一个部分
 date: 2020-03-04 02:35:24
 categories:
   - 前端笔记
+  - JavaScript
 tags:
   - JavaScript
 ---
