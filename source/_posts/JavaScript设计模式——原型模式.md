@@ -2,7 +2,6 @@
 title: JavaScript设计模式——原型模式
 date: 2020-03-04 18:29:53
 categories:
-  - 前端笔记
   - JavaScript
 tags:
   - 设计模式

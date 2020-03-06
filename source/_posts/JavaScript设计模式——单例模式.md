@@ -2,7 +2,6 @@
 title: JavaScript设计模式——单例模式
 date: 2020-03-04 13:14:15
 categories:
-  - 前端笔记
   - JavaScript
 tags:
   - 设计模式

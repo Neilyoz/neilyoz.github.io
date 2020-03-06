@@ -2,7 +2,6 @@
 title: MySQL 轻松创建千万级测试数据
 date: 2020-03-06 17:55:46
 categories:
-  - PHP
   - MySQL
 tags:
   - MySQL

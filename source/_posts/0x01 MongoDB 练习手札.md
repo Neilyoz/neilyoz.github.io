@@ -1,7 +1,7 @@
 ---
 title: 0x01 MongoDB 练习手札
 categories:
-  - 数据库相关
+  - MongoDB
 tags:
   - MongoDB
 date: 2019/11/19 20:33:23
