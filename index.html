@@ -185,6 +185,133 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/03/06/MySQL%E8%BD%BB%E6%9D%BE%E5%88%9B%E5%BB%BA%E5%8D%83%E4%B8%87%E7%BA%A7%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些NodeJS和PHP开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/06/MySQL%E8%BD%BB%E6%9D%BE%E5%88%9B%E5%BB%BA%E5%8D%83%E4%B8%87%E7%BA%A7%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">MySQL 轻松创建千万级测试数据</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-06 17:55:46 / 修改时间：18:00:14" itemprop="dateCreated datePublished" datetime="2020-03-06T17:55:46+08:00">2020-03-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/03/06/MySQL%E8%BD%BB%E6%9D%BE%E5%88%9B%E5%BB%BA%E5%8D%83%E4%B8%87%E7%BA%A7%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/06/MySQL轻松创建千万级测试数据/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>疫情期间，无奈新公司迟迟不能报道，心里真的是B了狗了。对于优化数据库的文章网络上很多，但是我觉得很不负责的是都不成体系，要么就是讲的片面，讲的也是千篇一律，索引、分析表、优化sql语句、分库分表什么的。</p>
+<p>说了很多理论，看着一堆都头大，而且时间久远，为了复习还是重新写写博文吧。我保证这些代码都是我实实在在测试后才会贴上来的。保证能粘贴就使用。</p>
+<p>不着急数据库优化一步一步来，我们既然要优化数据库，那么第一步就是要有数据。这里会介绍两种快速生成大量测试数据的方法，分别使用存储过程和临时数据表。</p>
+<h2 id="创建数据表"><a href="#创建数据表" class="headerlink" title="创建数据表"></a>创建数据表</h2><p>无论我们使用哪种方式，都需要使用一个数据表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">CREATE TABLE &#96;employee&#96; (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    &#96;id&#96; int(11) NOT NULL AUTO_INCREMENT,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    &#96;name&#96; varchar(100) NOT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    &#96;dep_id&#96; int(11) NOT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    &#96;age&#96; int(11) NOT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    PRIMARY KEY (&#96;id&#96;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">) ENGINE &#x3D; InnoDB DEFAULT CHARSET &#x3D; utf8mb4;</span></pre></td></tr></table></figure>
+
+
+
+<h2 id="使用存储过程"><a href="#使用存储过程" class="headerlink" title="使用存储过程"></a>使用存储过程</h2><h3 id="创建内存表"><a href="#创建内存表" class="headerlink" title="创建内存表"></a>创建内存表</h3><p>利用MySQL内存表插入速度快的特点，我们先利用函数和存储过程在内存表中生成数据，然后再从内存表插入普通表中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">CREATE TABLE &#96;employee_memory&#96; (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    &#96;id&#96; int(11) NOT NULL AUTO_INCREMENT,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    &#96;name&#96; varchar(100) NOT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    &#96;dep_id&#96; int(11) NOT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    &#96;age&#96; int(11) NOT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    PRIMARY KEY (&#96;id&#96;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">) ENGINE &#x3D; MEMORY DEFAULT CHARSET &#x3D; utf8mb4;</span></pre></td></tr></table></figure>
+
+
+
+<h3 id="创建函数及存储过程"><a href="#创建函数及存储过程" class="headerlink" title="创建函数及存储过程"></a>创建函数及存储过程</h3><p>创建随机字符串，MySQL的随机数常用的方式：<code>FLOOR( RAND() * (max - min) + min )</code> 生成[min, max]之间的数字包含min和max。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">DROP FUNCTION IF EXISTS rand_string;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">CREATE FUNCTION &#96;rand_string&#96;(n INT) RETURNS varchar(255) CHARSET utf8mb4</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    DETERMINISTIC</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">BEGIN</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    DECLARE chars_str varchar(100) DEFAULT &#39;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&#39;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    DECLARE return_str varchar(255) DEFAULT &#39;&#39; ;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    DECLARE i INT DEFAULT 0;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    WHILE i &lt; n DO</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        SET return_str &#x3D; concat(return_str, substring(chars_str, FLOOR(1 + RAND() * 62), 1));</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        SET i &#x3D; i + 1;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    END WHILE;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    RETURN return_str;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">END;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">$$</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">DELIMITER ;</span></pre></td></tr></table></figure>
+
+<p>创建插入数据存储过程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">DROP PROCEDURE IF EXISTS add_employee_memory;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE add_employee_memory(IN n INT)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">BEGIN</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	DECLARE i INT DEFAULT 1;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">	WHILE (i &lt;&#x3D; n) DO</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        INSERT INTO &#96;employee_memory&#96; (name, dep_id, age) VALUES (rand_string(10), FLOOR(RAND() * (6-1) + 1), FLOOR(RAND() * (30 - 20) + 20));</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        SET i &#x3D; i + 1;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    END WHILE;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">END</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">$$</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">DELIMITER ;</span></pre></td></tr></table></figure>
+
+
+
+<h3 id="调用存储过程"><a href="#调用存储过程" class="headerlink" title="调用存储过程"></a>调用存储过程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">CALL add_employee_memory(1000000);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">-- 从内存表插入普通表</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">INSERT INTO employee_real SELECT NULL, &#96;name&#96;, &#96;dep_id&#96;, &#96;age&#96; FROM employee_memory;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">DELETE FROM employee_memory;</span></pre></td></tr></table></figure>
+
+<blockquote>
+<p> 执行肯定时没有问题的，但是报错了！<code>SQL Error(1114)：The table &#39;employee_memory&#39; is full</code>警告我们内存满。别慌，我们可以通过修改<code>max_heap_table_size=1024M</code>这个参数调整，我测试能装个200W数据，不够？要啥自行车，执行几次就好了。。</p>
+</blockquote>
+<p>数据生成完了，当然要记得把函数和过程给干掉哟。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">DROP FUNCTION IF EXISTS rand_string;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">DROP PROCEDURE IF EXISTS add_employee_memory;</span></pre></td></tr></table></figure>
+
+<p>如果使用脚本去逐条插入，大哥造千万数据的话，你就挂机睡觉吧，要不然LOL通宵也行啊，保证一个晚上你惊奇的发现也就能生成百万条数据。</p>
+<h2 id="使用临时数据表"><a href="#使用临时数据表" class="headerlink" title="使用临时数据表"></a>使用临时数据表</h2><h3 id="创建临时表数据"><a href="#创建临时表数据" class="headerlink" title="创建临时表数据"></a>创建临时表数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">CREATE TABLE temp_user_info(</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    &#96;id&#96; int(11) NOT NULL AUTO_INCREMENT,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    &#96;name&#96; varchar(100) NOT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    &#96;age&#96; int(11) NOT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    PRIMARY KEY (&#96;id&#96;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">) ENGINE &#x3D; InnoDB DEFAULT CHARSET&#x3D;utf8mb4</span></pre></td></tr></table></figure>
+
+<h3 id="用你熟悉的语言生成数据文件-文件名为：data-txt"><a href="#用你熟悉的语言生成数据文件-文件名为：data-txt" class="headerlink" title="用你熟悉的语言生成数据文件(文件名为：data.txt)"></a>用你熟悉的语言生成数据文件(文件名为：data.txt)</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$userInfo = [];</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$userStr = <span class="string">''</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ($i=<span class="number">1</span>; $i&lt;=<span class="number">10000000</span>; $i++) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    $userInfo[<span class="string">'id'</span>] = $i;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    $userInfo[<span class="string">'name'</span>] = sprintf(<span class="string">'php_user_%d'</span>, $i);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    $userInfo[<span class="string">'age'</span>] = rand(<span class="number">20</span>, <span class="number">30</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 1,php_user_1,22</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    $userStr .= sprintf(<span class="string">"%s\n"</span>, join(<span class="string">','</span>, $userInfo));</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 千万不要生成一条就入库一条！</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 千万不要生成一条就入库一条！</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 千万不要生成一条就入库一条！</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 10w条再调用一次IO操作，一条调用一次操作，性能叫一个酸爽</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> ($i % <span class="number">100000</span> === <span class="number">0</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">        file_put_contents(<span class="string">'./data.txt'</span>, $userStr, FILE_APPEND);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">echo</span> $i . <span class="string">' is Ok'</span> . PHP_EOL;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">        $userStr = <span class="string">''</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>文件生成的很快，我大PHP不愧是全世界最好的语言，哈哈哈。不说笑开始导入数据到临时表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">load data LOCAL infile &#39;[文件完整路径]&#x2F;data.txt&#39; replace into table &#96;temp_user_info&#96; fields terminated BY &#39;,&#39; lines terminated by&#39;\n&#39;;</span></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文总结了两个我创建大量数据的方法，我个人更喜欢用第二种，毕竟我不喜欢写SQL，我们工作中绝大多数都是使用PHP，而SQL只是在需要的时候才会去看看文档怎么写，而且SQL排查错误真的是难受，而且第二种方法我个人觉得更加效率。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -208,10 +335,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-04 18:29:53 / 修改时间：18:34:23" itemprop="dateCreated datePublished" datetime="2020-03-04T18:29:53+08:00">2020-03-04</time>
+              <time title="创建时间：2020-03-04 18:29:53" itemprop="dateCreated datePublished" datetime="2020-03-04T18:29:53+08:00">2020-03-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-05 11:08:12" itemprop="dateModified" datetime="2020-03-05T11:08:12+08:00">2020-03-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -315,10 +448,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-04 13:14:15 / 修改时间：14:10:39" itemprop="dateCreated datePublished" datetime="2020-03-04T13:14:15+08:00">2020-03-04</time>
+              <time title="创建时间：2020-03-04 13:14:15" itemprop="dateCreated datePublished" datetime="2020-03-04T13:14:15+08:00">2020-03-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-05 11:08:12" itemprop="dateModified" datetime="2020-03-05T11:08:12+08:00">2020-03-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -417,10 +556,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-04 02:35:24 / 修改时间：14:10:38" itemprop="dateCreated datePublished" datetime="2020-03-04T02:35:24+08:00">2020-03-04</time>
+              <time title="创建时间：2020-03-04 02:35:24" itemprop="dateCreated datePublished" datetime="2020-03-04T02:35:24+08:00">2020-03-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-05 11:08:12" itemprop="dateModified" datetime="2020-03-05T11:08:12+08:00">2020-03-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -539,7 +684,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-04 14:10:39" itemprop="dateModified" datetime="2020-03-04T14:10:39+08:00">2020-03-04</time>
+                <time title="修改时间：2020-03-05 11:08:12" itemprop="dateModified" datetime="2020-03-05T11:08:12+08:00">2020-03-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -650,7 +795,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-04 14:10:39" itemprop="dateModified" datetime="2020-03-04T14:10:39+08:00">2020-03-04</time>
+                <time title="修改时间：2020-03-05 11:08:12" itemprop="dateModified" datetime="2020-03-05T11:08:12+08:00">2020-03-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -761,7 +906,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-04 14:10:38" itemprop="dateModified" datetime="2020-03-04T14:10:38+08:00">2020-03-04</time>
+                <time title="修改时间：2020-03-05 11:08:12" itemprop="dateModified" datetime="2020-03-05T11:08:12+08:00">2020-03-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -879,20 +1024,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
