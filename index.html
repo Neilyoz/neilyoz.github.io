@@ -185,6 +185,167 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/03/06/MySQL%E4%BC%98%E5%8C%96%E7%B3%BB%E5%88%97%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些NodeJS和PHP开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/06/MySQL%E4%BC%98%E5%8C%96%E7%B3%BB%E5%88%97%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">MySQL优化系列（二）</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-06 22:51:22 / 修改时间：22:55:41" itemprop="dateCreated datePublished" datetime="2020-03-06T22:51:22+08:00">2020-03-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/03/06/MySQL%E4%BC%98%E5%8C%96%E7%B3%BB%E5%88%97%EF%BC%88%E4%BA%8C%EF%BC%89/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/06/MySQL优化系列（二）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>说是优化，其实跟多是对以前一些概念的巩固，毕竟实践还是在理论牢靠的基础上进行的。所以这里我们先看看我们常用的一些关联查询方式。</p>
+<h2 id="JOIN链接"><a href="#JOIN链接" class="headerlink" title="JOIN链接"></a>JOIN链接</h2><ul>
+<li>应用形式<ul>
+<li>内连接</li>
+<li>左连接</li>
+<li>右连接</li>
+<li>查询左表独有数据</li>
+<li>查询右表独有数据</li>
+<li>全连接</li>
+<li>查询左右表各自的独有的数据</li>
+</ul>
+</li>
+</ul>
+<h3 id="创建表数据"><a href="#创建表数据" class="headerlink" title="创建表数据"></a>创建表数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">-- 部门表</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">DROP TABLE IF EXISTS &#96;department&#96;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">CREATE TABLE &#96;department&#96;(</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    &#96;id&#96; int(11) NOT NULL AUTO_INCREMENT,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    &#96;deptName&#96; varchar(30) DEFAULT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    &#96;address&#96; varchar(40) DEFAULT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    PRIMARY KEY(&#96;id&#96;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">) ENGINE&#x3D;InnoDB AUTO_INCREMENT&#x3D;1 DEFAULT CHARSET&#x3D;utf8;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;department&#96; VALUES (&#39;1&#39;, &#39;研发部（RD）&#39;, &#39;2层&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;department&#96; VALUES (&#39;2&#39;, &#39;人事部（HR）&#39;, &#39;3层&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;department&#96; VALUES (&#39;3&#39;, &#39;市场部（MK）&#39;, &#39;4层&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;department&#96; VALUES (&#39;4&#39;, &#39;后请部（MIS）&#39;, &#39;5层&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;department&#96; VALUES (&#39;5&#39;, &#39;财务部（FD）&#39;, &#39;6层&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">-- 员工表</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">DROP TABLE IF EXISTS &#96;employee&#96;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">CREATE TABLE &#96;employee&#96; (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">    &#96;id&#96; int(11) NOT NULL AUTO_INCREMENT,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    &#96;name&#96; varchar(20) DEFAULT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">    &#96;dep_id&#96; int(11) DEFAULT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    &#96;age&#96; int(11) DEFAULT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    &#96;salary&#96; decimal(10, 2) DEFAULT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">    &#96;cus_id&#96; int(11) DEFAULT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">    PRIMARY KEY(&#96;id&#96;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">) ENGINE&#x3D;InnoDB AUTO_INCREMENT&#x3D;1 DEFAULT CHARSET&#x3D;utf8;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;employee&#96; VALUES (&#39;1&#39;, &#39;鲁班&#39;, &#39;1&#39;, &#39;10&#39;, &#39;1000.00&#39;, &#39;1&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;employee&#96; VALUES (&#39;2&#39;, &#39;后羿&#39;, &#39;1&#39;, &#39;20&#39;, &#39;2000.00&#39;, &#39;1&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;employee&#96; VALUES (&#39;3&#39;, &#39;孙尚香&#39;, &#39;1&#39;, &#39;20&#39;, &#39;2500.00&#39;, &#39;1&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;employee&#96; VALUES (&#39;4&#39;, &#39;凯&#39;, &#39;4&#39;, &#39;20&#39;, &#39;3000.00&#39;, &#39;1&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;employee&#96; VALUES (&#39;5&#39;, &#39;典韦&#39;, &#39;4&#39;, &#39;40&#39;, &#39;3500.00&#39;, &#39;2&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;employee&#96; VALUES (&#39;6&#39;, &#39;貂蝉&#39;, &#39;6&#39;, &#39;20&#39;, &#39;5000.00&#39;, &#39;1&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;employee&#96; VALUES (&#39;7&#39;, &#39;孙膑&#39;, &#39;6&#39;, &#39;10&#39;, &#39;5000.00&#39;, &#39;1&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;employee&#96; VALUES (&#39;8&#39;, &#39;蔡文姬&#39;, &#39;30&#39;, &#39;35&#39;, &#39;4000.00&#39;, &#39;1&#39;);</span></pre></td></tr></table></figure>
+
+<h3 id="内连接"><a href="#内连接" class="headerlink" title="内连接"></a>内连接</h3><img src="/images/mysql-optimization/内连接.png" alt="演示文稿1" style="zoom:50%;" />
+
+<ul>
+<li>作用：查询两张表的共有部分</li>
+<li>语句：SELECT field FROM tableA INNER JOIN tableB on A.key = B.key</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">SELECT * FROM employee e INNER JOIN department d ON e.dep_id &#x3D; d.id;</span></pre></td></tr></table></figure>
+
+
+
+<h3 id="左连接"><a href="#左连接" class="headerlink" title="左连接"></a>左连接</h3><img src="/images/mysql-optimization/左连接.png" alt="左连接" style="zoom:50%;" />
+
+<ul>
+<li>作用：把左边表的内容全部查出，右边表只查出满足条件的记录，A和B的共有再加上A的独有</li>
+<li>语句：SELECT field FROM tableA LEFT JOIN tableB on A.key = B.key</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">SELECT * FROM employee e LEFT JOIN department d ON e.dep_id &#x3D; d.id;</span></pre></td></tr></table></figure>
+
+
+<h3 id="右连接"><a href="#右连接" class="headerlink" title="右连接"></a>右连接</h3><img src="/images/mysql-optimization/右连接.png" alt="右连接" style="zoom:50%;" />
+
+<ul>
+<li>作用：把右边表的内容全部查出，左边表只查出满足条件的记录，A和B的共有再加上B的独有</li>
+<li>语句：SELECT field FROM tableA RIGHT JOIN tableB on A.key = B.key</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">SELECT * FROM employee e RIGHT JOIN department d on e.dep_id &#x3D; d.id;</span></pre></td></tr></table></figure>
+
+
+
+<h3 id="查询左表独有数据——左连接基础上加上WHERE条件"><a href="#查询左表独有数据——左连接基础上加上WHERE条件" class="headerlink" title="查询左表独有数据——左连接基础上加上WHERE条件"></a>查询左表独有数据——左连接基础上加上WHERE条件</h3><img src="/images/mysql-optimization/查询左表独有数据.png" alt="查询左表独有数据" style="zoom:50%;" />
+
+<ul>
+<li>作用：获取左表数据，排除掉左表中的右表数据，</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">SELECT * FROM employee e LEFT JOIN department d ON e.dep_id &#x3D; d.id WHERE d.id is null;</span></pre></td></tr></table></figure>
+
+
+
+<h3 id="查询右表独有数据——有链接基础上加上WHERE条件"><a href="#查询右表独有数据——有链接基础上加上WHERE条件" class="headerlink" title="查询右表独有数据——有链接基础上加上WHERE条件"></a>查询右表独有数据——有链接基础上加上WHERE条件</h3><img src="/images/mysql-optimization/查询右表独有数据.png" alt="查询右表独有数据" style="zoom:50%;" />
+
+<ul>
+<li>作用：获取右表数据，排除掉右表中的左表数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">SELECT * FROM employee e RIGHT JOIN department d on e.dep_id &#x3D; d.id WHERE e.dep_id is null;</span></pre></td></tr></table></figure>
+
+
+
+<h3 id="全连接"><a href="#全连接" class="headerlink" title="全连接"></a>全连接</h3><img src="/images/mysql-optimization/全连接.png" alt="全连接" style="zoom:50%;" />
+
+<ul>
+<li>作用：查询两个表的全部信息</li>
+<li>语句：SELECT field FROM employee e Full Outter Join department d ON e.dep_id = d.id;(MySQL不支持，Oracle可以，你说气不气)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">(SELECT * FROM employee e LEFT JOIN department d ON e.dep_id &#x3D; d.id)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">UNION</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">(SELECT * FROM employee e RIGHT JOIN department d ON e.dep_id &#x3D; d.id)</span></pre></td></tr></table></figure>
+
+
+
+<h3 id="查询左右表各自的独有的数据"><a href="#查询左右表各自的独有的数据" class="headerlink" title="查询左右表各自的独有的数据"></a>查询左右表各自的独有的数据</h3><img src="/images/mysql-optimization/查询左右表各自的独有的数据.png" alt="查询左右表各自的独有的数据" style="zoom:50%;" />
+
+<ul>
+<li>作用：左表独有数据和右表独有数据查出</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">(SELECT * FROM employee e LEFT JOIN department d ON e.dep_id &#x3D; d.id WHERE d.id is null)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">UNION</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">(SELECT * FROM employee e RIGHT JOIN department d on e.dep_id &#x3D; d.id WHERE e.dep_id is null)</span></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/03/06/MySQL%E4%BC%98%E5%8C%96%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%80%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1077,7 +1238,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
