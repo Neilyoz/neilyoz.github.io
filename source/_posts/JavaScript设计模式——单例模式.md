@@ -19,7 +19,7 @@ tags:
 > 一个单一对象。比如：数据库连接、弹窗，一次运行无论操作多少次数据库，连接只存在一个，弹窗不管点击多少次，弹窗只能创建一次。
 
 代码实现：
-
+<!-- more -->
 ```javascript
 class Singleton {
   constructor() {}

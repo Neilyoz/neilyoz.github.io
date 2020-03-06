@@ -34,7 +34,7 @@ var anotherAnimal = Object.create(someAnimal, {
 });
 anotherAnimal.name = "汪星人";
 ```
-
+<!-- more -->
 如果我们不想通过`Object.create`去创建，则可以使用以下代码实现
 
 ```javascript
