@@ -97,3 +97,9 @@ theme: next
 deploy:
   type: "git"
   repo: "https://github.com/Neilyoz/neilyoz.github.io.git"
+
+#hexo sitemap
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
