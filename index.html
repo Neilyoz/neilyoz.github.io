@@ -70,7 +70,7 @@
   };
 </script>
 
-  <title>Neilyozの鱼不浪</title>
+  <title>Neilyozの鱼不浪 - 一个简单的手艺人</title>
   
 
 
@@ -101,6 +101,7 @@
   </style>
 </noscript>
 
+  <meta name="baidu-site-verification" content="j5l5XixtCH" />
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -118,7 +119,8 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-        <p class="site-subtitle">一个简单的手艺人</p>
+        <h1 class="site-subtitle" itemprop="description">一个简单的手艺人</h1>
+      
   </div>
 
   <div class="site-nav-toggle">
@@ -185,6 +187,111 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/03/13/%E5%AE%9E%E7%8E%B0React%E5%B8%83%E5%B1%80%E8%B7%AF%E7%94%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些NodeJS和PHP开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/13/%E5%AE%9E%E7%8E%B0React%E5%B8%83%E5%B1%80%E8%B7%AF%E7%94%B1/" class="post-title-link" itemprop="url">实现React布局路由</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-13 20:44:18 / 修改时间：21:17:52" itemprop="dateCreated datePublished" datetime="2020-03-13T20:44:18+08:00">2020-03-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/03/13/%E5%AE%9E%E7%8E%B0React%E5%B8%83%E5%B1%80%E8%B7%AF%E7%94%B1/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/13/实现React布局路由/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>疫情在家，本来开年就要入职的公司，入职时间是一拖再拖，这里真的是吐槽一下。在家呆着爸妈鼻子不是鼻子眼睛不是眼睛的，我心里也是日了狗，从新投简历，某些傻缺HR，一来就问你会Yii吗？我就纳闷了，现在的框架哪个不是容器搞一通。</p>
+<p>哎，抱怨没用，动手最实际，朋友要我帮忙做个管理后台，用React帮他做，不得不说一个小白尽然也知道React了。这个前端框架的知名度不得不说。我图省事儿样式让我写不可能的用Ant Design吧。</p>
+<h2 id="搭架子过程"><a href="#搭架子过程" class="headerlink" title="搭架子过程"></a>搭架子过程</h2><p>反正就是一堆命令什么</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">mkdir manager_beta &amp;&amp; cd manager_beta</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">npx create-react-app .</span></pre></td></tr></table></figure>
+
+<p>漫长的等待…期间我打开了书，看了看<code>JavaScript 设计模式</code>，架子是搭建完了，开始<code>antd</code>的安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">npm i --save antd</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">npm i --save react-router-dom</span></pre></td></tr></table></figure>
+
+<p>默认的<code>create-react-app</code>下面不是不会暴露出配置文件的，所以还要执行一下命令，为什么还要配置，作为开发人员，配置都不自己控制，总是不安心的。好吧，其实我是要用<code>less</code>这东西得配置吖。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">npm run eject</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">npm i --save less less-loader</span></pre></td></tr></table></figure>
+
+<p>接下来就是把下面这段配置放入<code>config\webpack.config.js</code>中了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// line: 50行左右</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> lessRegex = <span class="regexp">/\.(less)$/</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> lessModuleRegex = <span class="regexp">/\.module\.(less)$/</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// line: 487行左右</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    test: lessRegex,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        exclude: lessModuleRegex,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">            use: getStyleLoaders(&#123; <span class="attr">importLoaders</span>: <span class="number">3</span> &#125;, <span class="string">'less-loader'</span>),</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    test: lessModuleRegex,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    use: getStyleLoaders(</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">        &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">            importLoaders: <span class="number">3</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">            modules: <span class="literal">true</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">            getLocalIdent: getCSSModuleLocalIdent,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">            modifyVars:&#123;&#125;,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">            javascriptEnabled: <span class="literal">true</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">        &#125;,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">        <span class="string">'less-loader'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    ),</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">&#125;,</span></pre></td></tr></table></figure>
+
+<p>其实上面写的对我要说的怎么 <code>实现React布局路由</code> 有什么关系呢？好吧，我告诉你，一点关系都没有哈哈哈，我就是骗骗字数。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/13/%E5%AE%9E%E7%8E%B0React%E5%B8%83%E5%B1%80%E8%B7%AF%E7%94%B1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/03/12/Laravel%E6%89%A9%E5%B1%95%E5%8C%85%E7%9A%84%E5%BC%80%E5%8F%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -197,10 +304,10 @@
       <meta itemprop="name" content="Neilyozの鱼不浪">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2020/03/12/Laravel%E6%89%A9%E5%B1%95%E5%8C%85%E7%9A%84%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">Laravel扩展包的开发</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -299,10 +406,10 @@
       <meta itemprop="name" content="Neilyozの鱼不浪">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2020/03/11/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">MySQL主从复制配置</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -400,10 +507,10 @@
       <meta itemprop="name" content="Neilyozの鱼不浪">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2020/03/10/Vue-Gin-Gorm%E9%9A%8F%E4%BE%BF%E8%AF%B4/" class="post-title-link" itemprop="url">Vue + Gin + Gorm 随便说</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -512,10 +619,10 @@
       <meta itemprop="name" content="Neilyozの鱼不浪">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2020/03/08/MySQL%E5%B0%8F%E8%A1%A8%E9%A9%B1%E5%8A%A8%E5%A4%A7%E8%A1%A8/" class="post-title-link" itemprop="url">MySQL小表驱动大表</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -609,10 +716,10 @@
       <meta itemprop="name" content="Neilyozの鱼不浪">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2020/03/08/MySQL%E6%9C%80%E5%A4%A7%E5%80%BCMax%E7%9A%84%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">MySQL最大值Max的优化</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -706,10 +813,10 @@
       <meta itemprop="name" content="Neilyozの鱼不浪">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2020/03/06/MySQL%E4%BC%98%E5%8C%96%E7%B3%BB%E5%88%97%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">MySQL优化系列（二）</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -815,10 +922,10 @@
       <meta itemprop="name" content="Neilyozの鱼不浪">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2020/03/06/MySQL%E4%BC%98%E5%8C%96%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">MySQL优化系列（一）</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -927,10 +1034,10 @@
       <meta itemprop="name" content="Neilyozの鱼不浪">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2020/03/06/MySQL%E8%BD%BB%E6%9D%BE%E5%88%9B%E5%BB%BA%E5%8D%83%E4%B8%87%E7%BA%A7%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">MySQL 轻松创建千万级测试数据</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -1026,10 +1133,10 @@
       <meta itemprop="name" content="Neilyozの鱼不浪">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">JavaScript设计模式——原型模式</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -1116,112 +1223,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
-      <meta itemprop="name" content="Neilyoz">
-      <meta itemprop="description" content="分享一些NodeJS和PHP开发的经验，以及交流软件开发经验的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neilyozの鱼不浪">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">JavaScript设计模式——单例模式</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-04 13:14:15" itemprop="dateCreated datePublished" datetime="2020-03-04T13:14:15+08:00">2020-03-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-10 22:59:12" itemprop="dateModified" datetime="2020-03-10T22:59:12+08:00">2020-03-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/04/JavaScript设计模式——单例模式/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>众所周知，程序开发有很多语言，它们拥有各种不同的语法和规则，但是通用的思想部分就是——数据结构、设计模式，业内俗称内功。我是 PHP 入行，用 PHP 来实现一个单例我觉得不是什么难题。突然有一天 Node.js 进入了我的视线，心想 JavaScript 这几年皮呀，但是我喜欢。</p>
-<p>单例的定义：</p>
-<blockquote>
-<p>保证一个类仅有一个实例，并提供一个访问它的全局访问点。实现的方法为先判断实例是否存在，如果存在则直接返回，否则就创建实例再返回，这就保证了一个类只实例化一次。</p>
-</blockquote>
-<p>使用场景：</p>
-<blockquote>
-<p>一个单一对象。比如：数据库连接、弹窗，一次运行无论操作多少次数据库，连接只存在一个，弹窗不管点击多少次，弹窗只能创建一次。</p>
-</blockquote>
-<p>代码实现：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1272,7 +1273,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1285,7 +1286,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1407,6 +1408,15 @@ window.addEventListener('pjax:success', () => {
 
 
   
+  <script pjax>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
 
 
 

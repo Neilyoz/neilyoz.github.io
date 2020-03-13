@@ -70,7 +70,7 @@
   };
 </script>
 
-  <title>Neilyozの鱼不浪</title>
+  <title>Neilyozの鱼不浪 - 一个简单的手艺人</title>
   
 
 
@@ -101,6 +101,7 @@
   </style>
 </noscript>
 
+  <meta name="baidu-site-verification" content="j5l5XixtCH" />
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -118,7 +119,8 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-        <p class="site-subtitle">一个简单的手艺人</p>
+        <h1 class="site-subtitle" itemprop="description">一个简单的手艺人</h1>
+      
   </div>
 
   <div class="site-nav-toggle">
@@ -185,6 +187,112 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些NodeJS和PHP开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">JavaScript设计模式——单例模式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-04 13:14:15" itemprop="dateCreated datePublished" datetime="2020-03-04T13:14:15+08:00">2020-03-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-10 22:59:12" itemprop="dateModified" datetime="2020-03-10T22:59:12+08:00">2020-03-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/04/JavaScript设计模式——单例模式/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>众所周知，程序开发有很多语言，它们拥有各种不同的语法和规则，但是通用的思想部分就是——数据结构、设计模式，业内俗称内功。我是 PHP 入行，用 PHP 来实现一个单例我觉得不是什么难题。突然有一天 Node.js 进入了我的视线，心想 JavaScript 这几年皮呀，但是我喜欢。</p>
+<p>单例的定义：</p>
+<blockquote>
+<p>保证一个类仅有一个实例，并提供一个访问它的全局访问点。实现的方法为先判断实例是否存在，如果存在则直接返回，否则就创建实例再返回，这就保证了一个类只实例化一次。</p>
+</blockquote>
+<p>使用场景：</p>
+<blockquote>
+<p>一个单一对象。比如：数据库连接、弹窗，一次运行无论操作多少次数据库，连接只存在一个，弹窗不管点击多少次，弹窗只能创建一次。</p>
+</blockquote>
+<p>代码实现：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/03/04/0x01Promise%E7%90%86%E8%A7%A3%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%83%A8%E5%88%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -197,10 +305,10 @@
       <meta itemprop="name" content="Neilyozの鱼不浪">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2020/03/04/0x01Promise%E7%90%86%E8%A7%A3%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%83%A8%E5%88%86/" class="post-title-link" itemprop="url">0x01 Promise理解第一个部分</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -311,10 +419,10 @@
       <meta itemprop="name" content="Neilyozの鱼不浪">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2019/12/02/0x02%20MongoDB%20%E7%BB%83%E4%B9%A0%E6%89%8B%E6%9C%AD/" class="post-title-link" itemprop="url">0x02 MongoDB 练习手札</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -422,10 +530,10 @@
       <meta itemprop="name" content="Neilyozの鱼不浪">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2019/11/29/%E4%BD%BF%E7%94%A8-ES6-%E5%86%99-Koa-Web-%E9%A1%B9%E7%9B%AE/" class="post-title-link" itemprop="url">使用 ES6 写 Koa Web 项目</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -533,10 +641,10 @@
       <meta itemprop="name" content="Neilyozの鱼不浪">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2019/11/19/0x01%20MongoDB%20%E7%BB%83%E4%B9%A0%E6%89%8B%E6%9C%AD/" class="post-title-link" itemprop="url">0x01 MongoDB 练习手札</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -673,7 +781,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -686,7 +794,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -808,6 +916,15 @@ window.addEventListener('pjax:success', () => {
 
 
   
+  <script pjax>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
 
 
 
