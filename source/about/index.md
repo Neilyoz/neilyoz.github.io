@@ -15,6 +15,7 @@ Neilyoz，80 后，PHPer / NodeJS / Golong 都会写写，游戏手残党所以�
 
 - [Laravel + Swoole + Vue 即时通讯聊天](https://github.com/Neilyoz/laravel-swoole-chat)
 - [Express + Mongoose + Vue 英雄管理系统](https://github.com/Neilyoz/node-vue-moba)
+- [Vue + Gin + Gorm 随便说](https://github.com/Neilyoz/goedu)
 
 ## 教育
 
