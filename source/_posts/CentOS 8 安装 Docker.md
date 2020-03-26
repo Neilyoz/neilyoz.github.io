@@ -212,7 +212,7 @@ php                 7.4-cli             040c7fa6ecb6        6 days ago          
 docker ps
 docker stop 90558d9a592b
 # 这个时候我们需要调整
-docker run -dit --name myswoole -p 80:3000 -v "$PWD":/usr/src/myapp -w /usr/src/myapp myswoole:php7.4-cli bash
+docker run -dit --name myswoole -p 80:3000 -v "$PWD":/usr/src/myapp -w /usr/src/myapp myswoole:php7.4-cli php index.php
 ```
 
 命令分析：
@@ -243,7 +243,7 @@ CONTAINER ID        IMAGE                 COMMAND                  ...NAMES
 docker rm 90558d9a592b
 
 # 再次执行命令
-docker run -dit --name myswoole -p 80:3000 -v "$PWD":/usr/src/myapp -w /usr/src/myapp myswoole:php7.4-cli bash
+docker run -dit --name myswoole -p 80:3000 -v "$PWD":/usr/src/myapp -w /usr/src/myapp myswoole:php7.4-cli php index.php
 ```
 
 在容器绑定的 "\$PWD" 目录下创建一个`index.php`
