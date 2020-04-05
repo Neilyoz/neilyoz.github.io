@@ -49,15 +49,15 @@
   <meta name="description" content="Mybatis 简介前言学完 JDBC 后，其实很多时候我们项目开发中不会直接使用 JDBC，而是会用到一些更好的第三方封装库，Mybatis 就是第三方库中使用人数最多，口碑最好的一个存在。为了快速上手，当然是盘它吖。 搭建 MySQL 数据库相关的表环境 搭建数据库，并创建数据  1-- 创建数据库2CREATE DATABASE IF NOT EXISTS &amp;#96;mybatis&amp;#96;">
 <meta name="keywords" content="Java,Mybatis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mybatis 入门">
-<meta property="og:url" content="http:&#x2F;&#x2F;neilyoz.github.io&#x2F;2020&#x2F;04&#x2F;05&#x2F;Mybaits-%E5%85%A5%E9%97%A8&#x2F;index.html">
+<meta property="og:title" content="Mybaits-入门（一）">
+<meta property="og:url" content="http:&#x2F;&#x2F;neilyoz.github.io&#x2F;2020&#x2F;04&#x2F;05&#x2F;Mybaits-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89&#x2F;index.html">
 <meta property="og:site_name" content="Neilyozの鱼不浪">
 <meta property="og:description" content="Mybatis 简介前言学完 JDBC 后，其实很多时候我们项目开发中不会直接使用 JDBC，而是会用到一些更好的第三方封装库，Mybatis 就是第三方库中使用人数最多，口碑最好的一个存在。为了快速上手，当然是盘它吖。 搭建 MySQL 数据库相关的表环境 搭建数据库，并创建数据  1-- 创建数据库2CREATE DATABASE IF NOT EXISTS &amp;#96;mybatis&amp;#96;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-05T12:14:28.484Z">
+<meta property="og:updated_time" content="2020-04-05T12:22:35.170Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://neilyoz.github.io/2020/04/05/Mybaits-%E5%85%A5%E9%97%A8/">
+<link rel="canonical" href="http://neilyoz.github.io/2020/04/05/Mybaits-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/">
 
 
 <script id="page-configurations">
@@ -71,7 +71,7 @@
   };
 </script>
 
-  <title>Mybatis 入门 | Neilyozの鱼不浪</title>
+  <title>Mybaits-入门（一） | Neilyozの鱼不浪</title>
   
 
 
@@ -187,7 +187,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/05/Mybaits-%E5%85%A5%E9%97%A8/">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/05/Mybaits-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
@@ -200,7 +200,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          Mybatis 入门
+          Mybaits-入门（一）
         </h2>
 
         <div class="post-meta">
@@ -211,7 +211,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-04-05 19:27:25 / 修改时间：20:14:28" itemprop="dateCreated datePublished" datetime="2020-04-05T19:27:25+08:00">2020-04-05</time>
+              <time title="创建时间：2020-04-05 19:27:25 / 修改时间：20:22:35" itemprop="dateCreated datePublished" datetime="2020-04-05T19:27:25+08:00">2020-04-05</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -234,8 +234,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2020/04/05/Mybaits-%E5%85%A5%E9%97%A8/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/05/Mybaits-入门/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2020/04/05/Mybaits-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/05/Mybaits-入门（一）/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -570,9 +570,9 @@ window.addEventListener('pjax:success', () => {
       DISQUS.reset({
         reload: true,
         config: {page: {
-            url: "http://neilyoz.github.io/2020/04/05/Mybaits-%E5%85%A5%E9%97%A8/",
-            identifier: "2020/04/05/Mybaits-入门/",
-            title: "Mybatis 入门"
+            url: "http://neilyoz.github.io/2020/04/05/Mybaits-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/",
+            identifier: "2020/04/05/Mybaits-入门（一）/",
+            title: "Mybaits-入门（一）"
           }
         }
       });
