@@ -1,7 +1,11 @@
 ---
 title: Mybatis-入门（三）
 date: 2020-04-06 18:21:36
+categories:
+  - Java
 tags:
+  - Java
+  - Mybatis
 ---
 
 ## 前言
