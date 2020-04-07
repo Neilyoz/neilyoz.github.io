@@ -243,6 +243,50 @@ public void testAddUser() {
 }
 ```
 
+**parameterType 的参数为 map 时，这个方式实际开发中也会用到，我们也拿过来看看。**
+
+创建一个 `addUserWithMap` 接口实现方法到 `UserMapper.java` 接口中：
+
+```java
+// 添加用户使用 Map 参数
+int addUserWithMap(Map<String, Object> map);
+```
+
+添加对应的 xml 到 `UserMapper.xml` 中：
+
+````xml
+<insert id="addUserWithMap" parameterType="map">
+    insert into users (name, password) values (#{userName}, #{passWord})
+</insert>
+```
+
+键入测试代码：
+```java
+@Test
+public void testAddUserWithMap() {
+    SqlSession sqlSession = MybatisUtils.getSqlSession();
+
+    UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+    Map<String, Object> map = new HashMap<String, Object>();
+
+    map.put("userName", "大番薯");
+    map.put("passWord", "666666");
+
+    int result = mapper.addUserWithMap(map);
+    if (result > 0) {
+        System.out.println("插入成功！");
+    }
+
+    // 提交事务
+    sqlSession.commit();
+
+    sqlSession.close();
+}
+```
+
+我们可以看到占位符 `#{userName}`,`#{passWord}` 是对应了 Map传入的键。
+
 ### update：修改操作
 
 有了添加操作的铺垫，我相信 update 的操作也就是依葫芦画瓢的事儿，我还是继续将代码敲一遍。接口实现类代码如下：
@@ -267,7 +311,7 @@ public interface UserMapper {
     // 修改一个用户
     int updateUser(User user);
 }
-```
+````
 
 `UserMapper.xml`也要加入对应的 \<update\> 标签。
 
