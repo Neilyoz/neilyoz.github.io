@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Mybatis-入门（四）</title>
+      <link href="/2020/04/07/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E5%9B%9B%EF%BC%89/"/>
+      <url>/2020/04/07/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E5%9B%9B%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在快速搭建 mybatis 环境，实现增删改查的操作，配置的相关操作之后，我们也需要了解一下 Mybatis 的生命周期以及作用域，之所以会提到肯定是在某些场景下容易出现问题。为了避免这些不必要的问题。</p><h2 id="生命周期与作用域"><a href="#生命周期与作用域" class="headerlink" title="生命周期与作用域"></a>生命周期与作用域</h2><img src="/images/mybatis-rumen/生命周期与作用域.png" alt="右连接" style="zoom:100%;" /><p>不同作用域和生命周期类别是至关重要的，因为错误的使用会导致非常严重的 <strong>并发问题</strong>。</p><a id="more"></a><p><strong>SqlSessionFactoryBuilder:</strong></p><ul><li>一旦创建了 SqlSessionFactory，就不需要它了</li><li>局部变量</li></ul><p><strong>SqlSessionFactory：</strong></p><ul><li>说白了可以把它认为是：数据库连接池</li><li>SqlSessionFactory 一旦被创建就应该在应用的运行期间一直存在，<strong>没有任何理由丢弃它或重新创建另一个实例</strong></li><li>因此 SqlSessionFactory 的最佳作用域是应用作用域（全局的）</li><li>最简单的就是使用单例模式或者静态单例模式</li></ul><p><strong>SqlSession：</strong></p><ul><li>连接到连接池的一个请求</li><li>SqlSession 的实例不是线程安全的，因此是不能被共享的，所以它的最佳的作用域是请求或方法作用域。</li><li>有连接使用完也必须立马关闭，防止资源的占用</li></ul><img src="/images/mybatis-rumen/SqlSession相关流程.png" alt="右连接" style="zoom:100%;" /><p>这里的每个 Mapper，就代表一个具体的业务主要就是负责 SQL 语句的执行。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>了解 Mybatis 的生命周期与作用域，可以帮助我们理解在项目实际开发的过程中，遇到的一些资源占用问题，防止错误的创建数据库资源造成不必要的资源浪费的现象。</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Mybatis-入门（三）</title>
       <link href="/2020/04/06/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%89%EF%BC%89/"/>
       <url>/2020/04/06/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%89%EF%BC%89/</url>
