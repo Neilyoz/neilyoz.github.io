@@ -55,7 +55,7 @@
 <meta property="og:site_name" content="Neilyozの鱼不浪">
 <meta property="og:description" content="前言使用 xml 配置开发，我们 mybatis 也有注解开发。以后我们在公司做项目的时候多数会用到的注解，但是在 Mybatis 中还是 XML 为主。 我们这里也要回顾下什么是面向接口编程。  真正的开发中，很多时候我们会面向接口编程 根本原因：解耦，可拓展，提高复用，分层开发中，上层不用管具体的实现，大家都遵守共同的标准，是的开发变得容易，规范性好 在一个面向对象的系统中，系统的各种共嗯那个">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-09T14:35:24.787Z">
+<meta property="og:updated_time" content="2020-04-09T14:35:39.844Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://neilyoz.github.io/2020/04/09/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E5%85%AB%EF%BC%89/">
@@ -212,7 +212,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-04-09 16:47:12 / 修改时间：22:35:24" itemprop="dateCreated datePublished" datetime="2020-04-09T16:47:12+08:00">2020-04-09</time>
+              <time title="创建时间：2020-04-09 16:47:12 / 修改时间：22:35:39" itemprop="dateCreated datePublished" datetime="2020-04-09T16:47:12+08:00">2020-04-09</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -275,6 +275,8 @@
 <li>面向过程是指，我们考虑问题时，以一个具体的流程（事务过程）为单位，考虑它的实现</li>
 <li>接口设计与非接口设计时针对复用技术而言的，与面向对象（过程）不是一个问题。更多的体现就是对系整体的架构</li>
 </ul>
+<a id="more"></a>
+
 <h2 id="使用注解开发"><a href="#使用注解开发" class="headerlink" title="使用注解开发"></a>使用注解开发</h2><p><code>Mybatis</code> 简单的操作我们可以使用注解来查询，这时候我们可以不需要配置 xml 文件，直接在接口类中去写注解。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yubulang.dao;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.yubulang.pojo.User;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Insert;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Select;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.List;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="meta">@Select</span>(<span class="string">"select * from users"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    <span class="function">List&lt;User&gt; <span class="title">getUserList</span><span class="params">()</span></span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    <span class="meta">@Insert</span>(<span class="string">"insert into users (`name`, `password`) values (#&#123;name&#125;, #&#123;password&#125;)"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">addUser</span><span class="params">(User user)</span></span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
 
