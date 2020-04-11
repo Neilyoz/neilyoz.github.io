@@ -187,6 +187,101 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">Laravel Eloquent 模型关联关系（二）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-04-11 16:47:12 / 修改时间：23:05:36" itemprop="dateCreated datePublished" datetime="2020-04-11T16:47:12+08:00">2020-04-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%BA%8C%EF%BC%89/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/11/2020-04-11-Laravel-Eloquent-模型关联关系（二）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面我们已经演示了一对一，一对多，多对多的关系这三种是日常工作中很常见的关联关系，我们会介绍更加复杂的关联关系，分别是远层一对多和多态关联。</p>
+<h2 id="远层一对多关联"><a href="#远层一对多关联" class="headerlink" title="远层一对多关联"></a>远层一对多关联</h2><p>远层一对多在一对多关联的基础上加上了一个修饰词【远层】，意味着这个一对多关系不是直接关联，而是【远层】关联，远层关联需要借助中间表，前面我们讨论多对多关联也是借助中间表，但是远层一对多与其区别在于还是一对多的关联。</p>
+<p>理论和实例结合才容易理解。如果博客系统是针对全球市场的话，可能针对不同的国家推出不同的用户系统和功能，然后中国用户过来就只展示中国用户发布的文章，日本用户过来就只展示日本用户发表的文章，这里就涉及了三张表，存储国家的 <code>countries</code> 表，存储用户的 <code>users</code> 表以及存储文章的 <code>posts</code> 表。</p>
+<p>用户与文章是一对多的关联关系，国家与用户之间是一对多的关联（一个用户只能有一个国际），那么通过用户这张中间表，国家和文章之间也建立起来一对多的关联，只是这个关联不是直接的关联，而是【远层】的关联。</p>
+<p>针对这个情况，我们说国家和文章之间是远层的一对多关联。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%BA%8C%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%B8%80%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1123,112 +1218,11 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/05/Mybaits-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
-      <meta itemprop="name" content="Neilyoz">
-      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neilyozの鱼不浪">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/05/Mybaits-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">Mybaits-入门（一）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-05 16:13:37" itemprop="dateCreated datePublished" datetime="2020-04-05T16:13:37+08:00">2020-04-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-06 00:14:00" itemprop="dateModified" datetime="2020-04-06T00:14:00+08:00">2020-04-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/04/05/Mybaits-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/05/Mybaits-入门（一）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>学完 JDBC 后，其实很多时候我们项目开发中不会直接使用 JDBC，而是会用到一些更好的第三方封装库，Mybatis 就是第三方库中使用人数最多，口碑最好的一个存在。为了快速上手，当然是盘它吖。</p>
-<h2 id="搭建-MySQL-数据库相关的表环境"><a href="#搭建-MySQL-数据库相关的表环境" class="headerlink" title="搭建 MySQL 数据库相关的表环境"></a>搭建 MySQL 数据库相关的表环境</h2><ul>
-<li>搭建数据库，并创建数据</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">-- 创建数据库</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">CREATE DATABASE IF NOT EXISTS &#96;mybatis&#96; CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">-- 使用数据库</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">USE &#96;mybatis&#96;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">-- 创建users表</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">CREATE TABLE &#96;users&#96; (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  &#96;id&#96; int(20) unsigned NOT NULL AUTO_INCREMENT,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">  &#96;name&#96; varchar(64) NOT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">  &#96;password&#96; varchar(64) NOT NULL,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">  PRIMARY KEY (&#96;id&#96;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">) ENGINE&#x3D;InnoDB DEFAULT CHARSET&#x3D;utf8mb4;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">-- 插入数据库</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;users&#96; (&#96;name&#96;, &#96;password&#96;) VALUES (&#39;鱼不浪&#39;, &#39;666666&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;users&#96; (&#96;name&#96;, &#96;password&#96;) VALUES (&#39;鲁班&#39;, &#39;666666&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;users&#96; (&#96;name&#96;, &#96;password&#96;) VALUES (&#39;西施&#39;, &#39;666666&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;users&#96; (&#96;name&#96;, &#96;password&#96;) VALUES (&#39;麦特凯&#39;, &#39;666666&#39;);</span></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/05/Mybaits-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1274,7 +1268,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

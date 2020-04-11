@@ -51,27 +51,27 @@
 <meta name="keywords" content="JavaScript,PHPer,Software">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Neilyozの鱼不浪">
-<meta property="og:url" content="http:&#x2F;&#x2F;neilyoz.github.io&#x2F;tags&#x2F;%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F&#x2F;index.html">
+<meta property="og:url" content="http:&#x2F;&#x2F;neilyoz.github.io&#x2F;page&#x2F;4&#x2F;index.html">
 <meta property="og:site_name" content="Neilyozの鱼不浪">
 <meta property="og:description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://neilyoz.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+<link rel="canonical" href="http://neilyoz.github.io/page/4/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
+    isHome: true,
     isPost: false,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>标签: 设计模式 | Neilyozの鱼不浪</title>
+  <title>Neilyozの鱼不浪 - 一个简单的手艺人</title>
   
 
 
@@ -182,69 +182,119 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+        
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">设计模式
-          <small>标签</small>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2019/11/19/0x01%20MongoDB%20%E7%BB%83%E4%B9%A0%E6%89%8B%E6%9C%AD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/19/0x01%20MongoDB%20%E7%BB%83%E4%B9%A0%E6%89%8B%E6%9C%AD/" class="post-title-link" itemprop="url">0x01 MongoDB 练习手札</a>
         </h2>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-19 20:33:23" itemprop="dateCreated datePublished" datetime="2019-11-19T20:33:23+08:00">2019-11-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-06 00:14:00" itemprop="dateModified" datetime="2020-04-06T00:14:00+08:00">2020-04-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">MongoDB</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/11/19/0x01%20MongoDB%20%E7%BB%83%E4%B9%A0%E6%89%8B%E6%9C%AD/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/19/0x01 MongoDB 练习手札/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h2 class="collection-header">2020</h2>
+          <p>最近看 Node.js 相关的一些东西，跟着书上的教程实现了一个 Express + MongoDB + Vue.js 实验性项目，对于常年使用 LNMP 黄金搭档的我来说，不用写 SQL 语句真的是太爽了，也不用关心 MySQL 中的字段增减，真的是太幸福了。</p>
+<p><strong>既然学习就肯定要动手，不动手的学习就是耍流氓！说干就干！</strong></p>
+<p><strong>MongoDB 的基本概念存入单元</strong>：</p>
+<ol>
+<li>数据库 databases</li>
+<li>集合 collection</li>
+<li>文档 document</li>
+</ol>
+<p>正确的理解名词有助于我们在未来的开发和工作中方便和他人进行沟通，MongoDB 中可以存在多个数据，而数据库中可以存在多个集合，每个集合中可以存放多条文档数据。</p>
+<p>希望大家通过练习来掌握基础 MongoDB 操作，<strong>别光看，动手敲！</strong> <strong>别光看，动手敲！</strong> <strong>别光看，动手敲！</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/19/0x01%20MongoDB%20%E7%BB%83%E4%B9%A0%E6%89%8B%E6%9C%AD/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-04T18:29:53+08:00"
-              content="2020-03-04">
-          03-04
-        </time>
-      </div>
-
-      <h3 class="post-title">
-          <a class="post-title-link" href="/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/" itemprop="url">
-            <span itemprop="name">JavaScript设计模式——原型模式</span>
-          </a>
-      </h3>
-
-    </header>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
   </article>
+  
+  
+  
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-04T13:14:15+08:00"
-              content="2020-03-04">
-          03-04
-        </time>
-      </div>
-
-      <h3 class="post-title">
-          <a class="post-title-link" href="/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" itemprop="url">
-            <span itemprop="name">JavaScript设计模式——单例模式</span>
-          </a>
-      </h3>
-
-    </header>
-  </article>
-
-    </div>
   </div>
-  
-  
-  
 
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+  </nav>
 
 
 
