@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta name="baidu-site-verification" content="G7iWpylBLQ" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|0.7:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://neilyoz.github.io').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="前言Laravel Eloquent 模型支持的关联关系包括以下其中：  一对一 一对多 多对多 远层一对多 多态关联（一对一） 多态关联（一对多） 多态关联（多对多）  不着急，我们一个一个的看如何使用。">
+<meta name="keywords" content="PHP,Laravel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Laravel Eloquent 模型关联关系（一）">
+<meta property="og:url" content="http:&#x2F;&#x2F;neilyoz.github.io&#x2F;2020&#x2F;04&#x2F;11&#x2F;2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%B8%80%EF%BC%89&#x2F;index.html">
+<meta property="og:site_name" content="Neilyozの鱼不浪">
+<meta property="og:description" content="前言Laravel Eloquent 模型支持的关联关系包括以下其中：  一对一 一对多 多对多 远层一对多 多态关联（一对一） 多态关联（一对多） 多态关联（多对多）  不着急，我们一个一个的看如何使用。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-04-11T13:32:51.088Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://neilyoz.github.io/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Laravel Eloquent 模型关联关系（一） | Neilyozの鱼不浪</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Neilyozの鱼不浪</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">一个简单的手艺人</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          Laravel Eloquent 模型关联关系（一）
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-04-11 11:47:12 / 修改时间：21:32:51" itemprop="dateCreated datePublished" datetime="2020-04-11T11:47:12+08:00">2020-04-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%B8%80%EF%BC%89/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/11/2020-04-11-Laravel-Eloquent-模型关联关系（一）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Laravel Eloquent 模型支持的关联关系包括以下其中：</p>
+<ul>
+<li>一对一</li>
+<li>一对多</li>
+<li>多对多</li>
+<li>远层一对多</li>
+<li>多态关联（一对一）</li>
+<li>多态关联（一对多）</li>
+<li>多态关联（多对多）</li>
+</ul>
+<p>不着急，我们一个一个的看如何使用。</p>
+<a id="more"></a>
+
+<h2 id="一对一"><a href="#一对一" class="headerlink" title="一对一"></a>一对一</h2><p>一对一是最简单的关联关系，一般可用于某个扩展表与主表之间的关联关系。比如大型系统中，我们的用户表通常用于最基本的信息的存储，如：邮箱、用户名、密码等放在主表，然后用户的身份证信息，个性签名放在另外一张扩展表。需要的时候才会去扩展表取数据，从而提高查询性能。</p>
+<p>在开始之前，我们先通过数据迁移建立一张 <code>user_profiles</code> 表，并创建对应的 <code>UserProfile</code>，这可以通过 <code>php artisan</code> 命令一次完成：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">php artisan make:model UserProfile -m</span></pre></td></tr></table></figure>
+
+<p>在生成的 <code>create_user_profiles</code> 迁移文件中编写迁移类的 <code>up</code> 方法如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment">  * Run the migrations.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment">  *</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="comment">  * <span class="doctag">@return</span> void</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment">  */</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="function"></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    Schema::create(<span class="string">'user_profiles'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;id();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;bigInteger(<span class="string">"user_id"</span>)-&gt;comment(<span class="string">"用户ID"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;string(<span class="string">"card_number"</span>)-&gt;comment(<span class="string">"身份证号码"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;timestamps();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    &#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>注意：我们在 <code>user_profiles</code> 表中添加了 <code>user_id</code> 字段用于指向所属用户，从而建立与 <code>users</code> 表的关联。运行 <code>php artisan migrate</code> 在数据库创建这张数据表。</p>
+<p>准备好数据表之后，接下来我们创建 <code>users</code> 表和 <code>user_profiles</code> 表之间的关联，首先，我们在 <code>User</code> 模型类中通过 <code>hasOne</code> 方法定义它与 <code>UserProfile</code> 的的一对一关联，User 类中加入 <code>profile</code> 方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">profile</span><span class="params">()</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasOne(UserProfile::class);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>实际的使用时：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$user = User::first();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$user-&gt;profile;</span></pre></td></tr></table></figure>
+
+<h3 id="hasOne-方法的签名"><a href="#hasOne-方法的签名" class="headerlink" title="hasOne 方法的签名"></a>hasOne 方法的签名</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">hasOne</span><span class="params">($related, $foreignKey = null, $localKey = null)</span></span></span></pre></td></tr></table></figure>
+
+<ul>
+<li>$related 是关联模型的类名</li>
+<li>$foreignKey 是关联模型所属表的外键</li>
+<li>$localKey 是关联表的外键关联到当前模型所属表的那个字段</li>
+</ul>
+<h3 id="建立相对的关联关系"><a href="#建立相对的关联关系" class="headerlink" title="建立相对的关联关系"></a>建立相对的关联关系</h3><p>通常我们都是通过 <code>User</code> 模型获取 <code>UserProfile</code> 模型，但是有时候我们可以需要反过来通过 <code>UserProfile</code> 反查询所属的 <code>User</code> 模型，Eloquent 底层也为我们提供了相应的 <code>belongsTo</code> 方法来建立一对一关联关系，我们在 <code>UserProfile</code> 关联模型定义它与 <code>User</code> 模型的关联如下：</p>
+<p>给 UserProfile.php 中加入 <code>user</code> 方法:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">user</span><span class="params">()</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;belongsTo(User::class);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>实际的使用时：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$userProfile = UserProfile::first();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$userProfile-&gt;user;</span></pre></td></tr></table></figure>
+
+<h3 id="belongsTo-方法的签名"><a href="#belongsTo-方法的签名" class="headerlink" title="belongsTo 方法的签名"></a>belongsTo 方法的签名</h3><p>和 <code>hasOne</code> 方法一样，<code>belongsTo</code> 方法也是遵循了默认的约定签名如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">belongsTo</span><span class="params">($related, $foreignKey = null, $ownerKey = null, $relation = null)</span></span>;</span></pre></td></tr></table></figure>
+
+<ul>
+<li>$related 是关联模型的类名</li>
+<li>$foreignKey 是当前模型所属表的外键</li>
+<li>$owerKey 是关联模型类所属表的主键</li>
+<li>$relation 是关联关系方法名，也是关联关系动态属性名</li>
+</ul>
+<h2 id="一对多"><a href="#一对多" class="headerlink" title="一对多"></a>一对多</h2><p>一对多关联是我们日常开发中经常碰到的一种关联关系。以博客系统为例，一个用户可以发布多篇文章，反过来，一篇文章只能归属于一个用户，那么用户和文章之间就是一对多的关系，同样，用户可以发布多条评论，一条评论只能归属于一个用户，用户与评论之间也是一对多的关系。</p>
+<h3 id="创建-posts-表以及对应迁移文件"><a href="#创建-posts-表以及对应迁移文件" class="headerlink" title="创建 posts 表以及对应迁移文件"></a>创建 posts 表以及对应迁移文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">php artisan make:model Post -m</span></pre></td></tr></table></figure>
+
+<p>对应迁移文件中的 Up 方法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    Schema::create(<span class="string">'posts'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;id();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;bigInteger(<span class="string">"user_id"</span>)-&gt;comment(<span class="string">"所属用户id"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;string(<span class="string">'title'</span>)-&gt;comment(<span class="string">"文章标题"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;longText(<span class="string">'content'</span>)-&gt;comment(<span class="string">"文章内容"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;bigInteger(<span class="string">'view'</span>)-&gt;comment(<span class="string">"查看次数"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;timestamps();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;softDeletes();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    &#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h3 id="创建-User-模型对应的-posts-方法"><a href="#创建-User-模型对应的-posts-方法" class="headerlink" title="创建 User 模型对应的 posts 方法"></a>创建 User 模型对应的 posts 方法</h3><p>要定义用户文章之间的一对多关联，可以在 <code>User</code> 模型类中通过 <code>Eloquent</code> 底层的提供的 <code>hasMany</code> 方法来实现：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">posts</span><span class="params">()</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Post::class, <span class="string">"user_id"</span>, <span class="string">"id"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>实际的使用时：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$user = User::first();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$user-&gt;posts;</span></pre></td></tr></table></figure>
+
+<h3 id="hasMany-方法的签名"><a href="#hasMany-方法的签名" class="headerlink" title="hasMany 方法的签名"></a>hasMany 方法的签名</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">hasMany</span><span class="params">($related, $foreignKey = null, $localKey = null)</span></span></span></pre></td></tr></table></figure>
+
+<ul>
+<li>$related 是关联模型的类名</li>
+<li>$foreignKey 是关联模型所属表的外键</li>
+<li>$localKey 是关联表的外键关联到当前模型所属表的那个字段</li>
+</ul>
+<h3 id="建立相对的关联的关系"><a href="#建立相对的关联的关系" class="headerlink" title="建立相对的关联的关系"></a>建立相对的关联的关系</h3><p>我们将 <code>Post</code> 模型中的关联关系调用方法名为 <code>author</code>，这样，我们就需要手动指定更多的 <code>belongsTo</code> 方法传入参数：</p>
+<p>Post.php 中加入 <code>author</code> 方法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">author</span><span class="params">()</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;belongsTo(User::class, <span class="string">'user_id'</span>, <span class="string">'id'</span>, <span class="string">'author'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>实际的使用时：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$post = Post::first();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$post-&gt;author;</span></pre></td></tr></table></figure>
+
+<h2 id="多对多"><a href="#多对多" class="headerlink" title="多对多"></a>多对多</h2><p>多对多关联在实际开发中很常见，还是以博客系统为例子，我们会为每篇文章设置标签，一篇文章往往有多个标签，反过来，一个标签可能会归属于多篇文章，这时，我们说文章和标签之间是多对多的关联关系。</p>
+<p>多对多关联比一对一和一对多关联复杂一些，需要借助一张中间表才能建立关联关系。以文章标签为例，文章表已经存在，还需要创建一张 <code>tags</code> 表和中间表 <code>post_tags</code> 表。首先创建 <code>Tag</code> 模型类及其对应数据表 <code>tags</code> 迁移文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">php artisan make:model Tag -m</span></pre></td></tr></table></figure>
+
+<p>编写 <code>create_tags_table</code> 迁移文件对应的 <code>up</code> 方法如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    Schema::create(<span class="string">'tags'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;increments(<span class="string">'id'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;string(<span class="string">'name'</span>, <span class="number">100</span>)-&gt;unique()-&gt;comment(<span class="string">'标签名'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;timestamps();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    &#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>然后创建 <code>post_tags</code> 数据表迁移文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">php artisan make:migration create_post_tags_table --create=post_tags</span></pre></td></tr></table></figure>
+
+<p>编写对应迁移类的 <code>up</code> 方法如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    Schema::create(<span class="string">'post_tags'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;increments(<span class="string">'id'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;integer(<span class="string">'post_id'</span>)-&gt;unsigned()-&gt;default(<span class="number">0</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;integer(<span class="string">'tag_id'</span>)-&gt;unsigned()-&gt;default(<span class="number">0</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;unique([<span class="string">'post_id'</span>, <span class="string">'tag_id'</span>]);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        $table-&gt;timestamps();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    &#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>运行 <code>php artisan migrate</code> 让迁移生效。</p>
+<p>接下来，我们在 <code>Post</code> 模型类中定义其与 <code>Tags</code> 模型类的关联关系，通过 Eloquent 提供的 <code>belongsToMany</code> 方法来实现：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">tags</span><span class="params">()</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;belongsToMany(Tag::class, <span class="string">'post_tags'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>通过数据填充器填充一些数据到 <code>tags</code> 表和 <code>post_tags</code> 表，这样我们可以通过关联查询查询指定的 <code>Post</code> 模型上的标签信息了：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$post = Post::with(<span class="string">'tags'</span>)-&gt;first();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$tags = $post-&gt;tags;</span></pre></td></tr></table></figure>
+
+<h3 id="belongsToMany-方法的签名"><a href="#belongsToMany-方法的签名" class="headerlink" title="belongsToMany 方法的签名"></a>belongsToMany 方法的签名</h3><p>可以看到我们在定义多对多关联的时候，也没有指定哪些字段进行关联，这样是遵循 Eloquent 底层默认约定的功劳， <code>belongsToMany</code> 方法签名如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">belongsToMany</span><span class="params">($related, $table = null, $foreignPivotKey = null, $relatedPivotKey = null, $parentKey = null, $relatedKey = null, $relation = null)</span></span></span></pre></td></tr></table></figure>
+
+<ul>
+<li>$related 是关联模型的类名</li>
+<li>$table 是建立多对多关联的中间表名，该表名默认凭借规则如下：<ul>
+<li>当前模型+下划线+关联模型，这里是自定义的，默认转化是根据两个表名首字母排序之后，用下划线分割，如果默认的话，这里应该是<code>post_tag</code>，但是为了遵循 Laravel 表明为复数规定，我们自行定义一回。</li>
+</ul>
+</li>
+<li>$foreignPivotKey 是中间表中当前模型类的外键，默认拼接规则和前面一对一，一对多一样，所以本例中是 <code>posts</code> 表的 <code>post_id</code> 字段。</li>
+<li>$relatedPivotKey 是中间表中当前模型类的外键，只不过作用于关联模型，所以本例中是<code>tags</code>表的<code>tag_id</code>字段。</li>
+<li>$parentKey 表示对应当前模型哪个字段（即 $foreignPivotKey 映射到当前模型所属表的哪个字段），默认是主键 ID，即 <code>posts</code> 表的 <code>id</code> 字段，所以这里不需要额外指定。</li>
+<li>$relatedKey 表示对应关联模型的哪个字段（即 $relatedPivotKey 映射到关联模型所属表的哪个字段），默认是关联模型的主键 ID，即 tags 表的 id 字段，所以这里也不需要额外指定。</li>
+<li>$relation 表示关联关系名称，用于设置查询结果中的关联属性，默认是关联方法名。</li>
+</ul>
+<h3 id="建立相对的关联联系"><a href="#建立相对的关联联系" class="headerlink" title="建立相对的关联联系"></a>建立相对的关联联系</h3><p>与之前的关联关系一样，多对多关联也支持建立相对的关联关系，而且由于多对多的双方是平等的，不存在谁归属谁的问题，所以建立相对关联的方法都是一样的，我们可以在 Tag 模型中通过 belongsToMany 方法建立其与 Post 模型的关联关系：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">posts</span><span class="params">()</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;belongsToMany(Post::class, <span class="string">'post_tags'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>实际的使用时：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$tag = Tag::with(<span class="string">'posts'</span>)-&gt;first();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$posts = $tag-&gt;posts;</span></pre></td></tr></table></figure>
+
+<h3 id="获取中间表字段"><a href="#获取中间表字段" class="headerlink" title="获取中间表字段"></a>获取中间表字段</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$post = Post::first();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$post-&gt;tags;</span></pre></td></tr></table></figure>
+
+<p>Eloquent 还提供了方法允许你获取中间表的字段，你仔细查询结果字段，会发现 <code>relations</code> 字段中有一个 <code>pivot</code> 属性，中间表字段就存放在这个属性对象上。</p>
+<p>中间表只有对应的中间表关联 id 没有时间戳，我们可以通过这个方式添加：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">tags</span><span class="params">()</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;belongsToMany(Tag::class, <span class="string">'post_tags'</span>)-&gt;withTimestamps();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>除了这样，你还在中间表定义了额外的字段信息，比如 <code>user_id</code>，通过 <code>with</code> 方法传入字段就将其返回了：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">tags</span><span class="params">()</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;belongsToMany(Tag::class, <span class="string">'post_tags'</span>)-&gt;withPivot(<span class="string">'user_id'</span>)-&gt;withTimestamps();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h3 id="自定义中间表模型类"><a href="#自定义中间表模型类" class="headerlink" title="自定义中间表模型类"></a>自定义中间表模型类</h3><p>你可以通过自定义中间表对应模型类实现更多自定义操作，中间表模型继承自 <code>Illuminate\Database\Eloquent\Relations\Pivot</code>，Pivot 也是 Eloquent Model 类的子类，只不过为中间表操作定义了很多方法和属性，比如我们创建一个自定义的中间表模型类 PostTag：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Eloquent</span>\<span class="title">Relations</span>\<span class="title">Pivot</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PostTag</span> <span class="keyword">extends</span> <span class="title">Pivot</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="class"></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">protected</span> $table = <span class="string">'post_tags'</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>这样，我们在定义多对多关联关系的时候指定自定义的模型类了：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">tags</span><span class="params">()</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;belongsToMany(Tag::class, <span class="string">'post_tags'</span>)-&gt;using(PostTag::class);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h3 id="更多中间表操作"><a href="#更多中间表操作" class="headerlink" title="更多中间表操作"></a>更多中间表操作</h3><p>此外，如果你觉得 pivot 可读性不好，你还可以自定义中间表实例属性名称：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">$this</span>-&gt;belongsToMany(Tag::class, <span class="string">'post_tags'</span>)-&gt;as(<span class="string">'taggable'</span>)-&gt;withTimestamps();</span></pre></td></tr></table></figure>
+
+<p>这样，就可以通过 $tag-&gt;taggable-&gt;created_at 访问中间表字段值了。</p>
+<p>还可以通过中间表字段值过滤关联数据（支持 where 和 in 查询）：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">$this</span>-&gt;belongsToMany(Tag::class, <span class="string">'post_tags'</span>)-&gt;wherePivot(<span class="string">'user_id'</span>, <span class="number">1</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">$this</span>-&gt;belongsToMany(Tag::class, <span class="string">'post_tags'</span>)-&gt;wherePivotIn(<span class="string">'user_id'</span>, [<span class="number">1</span>, <span class="number">2</span>]);</span></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这里只是说了一个基础，更多高级的在后面呈现给大家。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PHP/" rel="tag"># PHP</a>
+              <a href="/tags/Laravel/" rel="tag"># Laravel</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/09/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B9%9D%EF%BC%89/" rel="prev" title="Mybatis-入门（九）">
+      <i class="fa fa-chevron-left"></i> Mybatis-入门（九）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一对一"><span class="nav-number">2.</span> <span class="nav-text">一对一</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hasOne-方法的签名"><span class="nav-number">2.1.</span> <span class="nav-text">hasOne 方法的签名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立相对的关联关系"><span class="nav-number">2.2.</span> <span class="nav-text">建立相对的关联关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#belongsTo-方法的签名"><span class="nav-number">2.3.</span> <span class="nav-text">belongsTo 方法的签名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一对多"><span class="nav-number">3.</span> <span class="nav-text">一对多</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-posts-表以及对应迁移文件"><span class="nav-number">3.1.</span> <span class="nav-text">创建 posts 表以及对应迁移文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-User-模型对应的-posts-方法"><span class="nav-number">3.2.</span> <span class="nav-text">创建 User 模型对应的 posts 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hasMany-方法的签名"><span class="nav-number">3.3.</span> <span class="nav-text">hasMany 方法的签名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立相对的关联的关系"><span class="nav-number">3.4.</span> <span class="nav-text">建立相对的关联的关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多对多"><span class="nav-number">4.</span> <span class="nav-text">多对多</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#belongsToMany-方法的签名"><span class="nav-number">4.1.</span> <span class="nav-text">belongsToMany 方法的签名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立相对的关联联系"><span class="nav-number">4.2.</span> <span class="nav-text">建立相对的关联联系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取中间表字段"><span class="nav-number">4.3.</span> <span class="nav-text">获取中间表字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义中间表模型类"><span class="nav-number">4.4.</span> <span class="nav-text">自定义中间表模型类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多中间表操作"><span class="nav-number">4.5.</span> <span class="nav-text">更多中间表操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Neilyoz"
+      src="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+  <p class="site-author-name" itemprop="name">Neilyoz</p>
+  <div class="site-description" itemprop="description">分享一些软件开发的经验，以及交流软件开发经验的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Neilyoz</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+  <script pjax>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://neilyoz.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: {page: {
+            url: "http://neilyoz.github.io/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%B8%80%EF%BC%89/",
+            identifier: "2020/04/11/2020-04-11-Laravel-Eloquent-模型关联关系（一）/",
+            title: "Laravel Eloquent 模型关联关系（一）"
+          }
+        }
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://neilyoz.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+</script>
+
+    </div>
+</body>
+</html>
