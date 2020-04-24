@@ -187,6 +187,930 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/24/2020-04-24-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/24/2020-04-24-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">设计模式之简单工厂（静态工厂模式）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-24 20:27:53" itemprop="dateCreated datePublished" datetime="2020-04-24T20:27:53+08:00">2020-04-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-25 01:21:21" itemprop="dateModified" datetime="2020-04-25T01:21:21+08:00">2020-04-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/04/24/2020-04-24-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/24/2020-04-24-设计模式之简单工厂模式/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>简单工厂模式（静态工厂模式），最为一个出镜率比较高的设计模式，相对来说比较简单，大家可以很快上手，我觉得还是举例子给大家会比较好理解也记忆。</p>
+<p>我们首先看看它的优缺点：</p>
+<ul>
+<li>优点是比较好理解，简单易操作</li>
+<li>缺点是违反了设计模式的 OCP 原则，即对扩展开放，对修改关闭。即当我们给类增加新功能的时候，尽量不修改代码或者尽量少修改代码</li>
+</ul>
+<h2 id="理想小镇的聪明面包达人"><a href="#理想小镇的聪明面包达人" class="headerlink" title="理想小镇的聪明面包达人"></a>理想小镇的聪明面包达人</h2><p>我们想象一下，一个理想小镇上有个面包达人，他教会了好几个徒弟，徒弟们也准守传承按照指定的配方去做面包，每当想到一个新的做法面包达人都要挨个徒弟的教会他们。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/24/2020-04-24-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/23/2020-04-23-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/23/2020-04-23-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89/" class="post-title-link" itemprop="url">设计模式之单例模式（三）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-23 19:27:53" itemprop="dateCreated datePublished" datetime="2020-04-23T19:27:53+08:00">2020-04-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/04/23/2020-04-23-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/23/2020-04-23-设计模式之单例模式（三）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>懒汉模式虽然起到了延迟加载的，但是总的来说这个东西还不是很靠谱，我们只能继续探寻下去。今天我们来看看剩下的三种：双重检查、静态内部类、枚举方式。</p>
+<h2 id="单例模式（双重检查）"><a href="#单例模式（双重检查）" class="headerlink" title="单例模式（双重检查）"></a>单例模式（双重检查）</h2><p>双重检查，主要是使用 volatile 关键字，声明我们的类中的静态属性</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yubulang.type06;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton instance;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 提供一个静态的公有方法，加入双重检查代码，解决线程安全问题，同时解决懒加载问题</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 同时保证了效率，推荐使用</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">synchronized</span> (Singleton<span class="class">.<span class="keyword">class</span>) </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">                <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">                    instance = <span class="keyword">new</span> Singleton();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">                &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> instance;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/23/2020-04-23-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/21/2020-04-21-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/21/2020-04-21-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">设计模式之单例模式（二）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-21 10:18:00" itemprop="dateCreated datePublished" datetime="2020-04-21T10:18:00+08:00">2020-04-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/04/21/2020-04-21-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/21/2020-04-21-设计模式之单例模式（二）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面我们介绍了单例模式的饿汉模式，其实饿汉式很好理解，形象的记忆就是不管怎么样，先把内存吃掉再说。本着贪多嚼不烂的原则，我们今天来看看懒汉式，这个懒汉式就有三种不同的形式。当然还是理解为主。</p>
+<h2 id="懒汉式（线程不安全）"><a href="#懒汉式（线程不安全）" class="headerlink" title="懒汉式（线程不安全）"></a>懒汉式（线程不安全）</h2><p>在同一个线程中运行，这个方法没有问题。我们先看代码，后面再来看看这个懒汉式的优缺点。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yubulang.type03;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 提供一个静态的公有方法，当使用到该方法时，才去创建instance</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 懒汉式1 这个因为懒，懒得线程都不安全了</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">            instance = <span class="keyword">new</span> Singleton();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> instance;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/21/2020-04-21-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/20/2020-04-20-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/20/2020-04-20-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">设计模式之单例模式（一）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-20 10:18:00" itemprop="dateCreated datePublished" datetime="2020-04-20T10:18:00+08:00">2020-04-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/04/20/2020-04-20-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/20/2020-04-20-设计模式之单例模式（一）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="单例模式简介"><a href="#单例模式简介" class="headerlink" title="单例模式简介"></a>单例模式简介</h2><p>单例设计模式，就是采取一定的方法保证整个的软件系统中，对某个类只能存在一个对象实例，并且类只提供一个取得对象实例的方法（静态方法）。</p>
+<p>单例模式有八种方式：</p>
+<ol>
+<li>饿汉式（静态常量）</li>
+<li>饿汉式（静态代码块）</li>
+<li>懒汉式（线程不安全）</li>
+<li>懒汉式（线程安全，同步方法）</li>
+<li>懒汉式（线程安全，同步代码块）</li>
+<li>双重检查</li>
+<li>静态内部类</li>
+<li>枚举</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/20/2020-04-20-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/17/2020-04-17-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8BUML%E7%B1%BB%E5%9B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/17/2020-04-17-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8BUML%E7%B1%BB%E5%9B%BE/" class="post-title-link" itemprop="url">设计模式之UML类图</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-17 14:32:23" itemprop="dateCreated datePublished" datetime="2020-04-17T14:32:23+08:00">2020-04-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/04/17/2020-04-17-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8BUML%E7%B1%BB%E5%9B%BE/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/17/2020-04-17-设计模式之UML类图/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们要给别人讲解一个问题的时候，最直观的方法莫过于用图形的方式去讲解，而不是枯燥的文字。毕竟我们还是个孩子的时候，图画更能给我们带来触动，而文字我们因为一些认知的问题会导致一些理解能力上的偏差。设计模式里面的UML类图就是可以让你给别人讲解设计理念的时候，不用再是枯燥的代码和文字，而是直接给别人用类图的形式来表达的一种方式。</p>
+<p>为了方便大家了解，我会给出对应的类图，以及对应的代码实现，让大家有个初步的概念，方便大家来学习设计模式这枯燥的东西。</p>
+<p>我们常见的几种关系：泛化（Generalization）、实现（Realization）、关联（Association）、聚合（Aggregation）、组合（Composition），依赖（Dependency）。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/17/2020-04-17-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8BUML%E7%B1%BB%E5%9B%BE/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/16/2020-04-16-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%88%9D%E6%8E%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/16/2020-04-16-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%88%9D%E6%8E%A2/" class="post-title-link" itemprop="url">设计模式初探</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-16 12:48:12" itemprop="dateCreated datePublished" datetime="2020-04-16T12:48:12+08:00">2020-04-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/04/16/2020-04-16-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%88%9D%E6%8E%A2/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/16/2020-04-16-设计模式初探/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>设计模式作为一个程序员，相信大家肯定不会陌生，它是一些成熟的且通用的程序设计解决方案，针对这些肯定会存在一些理论基础，来为这些这些模式提供理论依据，这里我们就要先搞明白这些理论到底是什么，这样我们对设计模式有事半功倍的效果。</p>
+<p>设计模式的基本原则：</p>
+<ol>
+<li>单一职责原则</li>
+<li>开闭原则</li>
+<li>里式替换原则</li>
+<li>依赖倒转原则</li>
+<li>接口隔离原则</li>
+<li>合成复用原则</li>
+<li>迪米特法则</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/16/2020-04-16-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%88%9D%E6%8E%A2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/15/2020-04-15-Redis-%E6%8C%81%E4%B9%85%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/15/2020-04-15-Redis-%E6%8C%81%E4%B9%85%E5%8C%96/" class="post-title-link" itemprop="url">Redis 持久化</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-15 11:03:27" itemprop="dateCreated datePublished" datetime="2020-04-15T11:03:27+08:00">2020-04-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/04/15/2020-04-15-Redis-%E6%8C%81%E4%B9%85%E5%8C%96/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/15/2020-04-15-Redis-持久化/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>相比 Memcache 而言，Redis 可以把数据持久化到我们的磁盘上。来保证缓存的数据不会应为断电而丢失。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>数据存放于：</p>
+<ul>
+<li>内存：高效、断电（关机）内存数据会丢失</li>
+<li>硬盘：读写速度慢于内存，断电数据不会丢失</li>
+</ul>
+<blockquote>
+<p>Redis 持久化存储支持两种方式：RDB 和 AOF。</p>
+<ul>
+<li>RDB 一定时间存储文件</li>
+<li>AOF 默认每秒存储历史命令</li>
+</ul>
+<p>Redis 支持持久化的内存数据库，也就是Redis需要经营将内存中的数据同步到硬盘来保证持久化。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/15/2020-04-15-Redis-%E6%8C%81%E4%B9%85%E5%8C%96/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/14/2020-04-14-Redis-%E4%BA%8B%E5%8A%A1%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/14/2020-04-14-Redis-%E4%BA%8B%E5%8A%A1%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%8B/" class="post-title-link" itemprop="url">Redis 事务了解一下</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-14 23:23:17" itemprop="dateCreated datePublished" datetime="2020-04-14T23:23:17+08:00">2020-04-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/04/14/2020-04-14-Redis-%E4%BA%8B%E5%8A%A1%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%8B/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/14/2020-04-14-Redis-事务了解一下/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>和MySQL一样，我们的Redis也支持事务操作，事务操作可以执行多个命令（按顺序串行化执行，执行中不会被其他命令插入）。</p>
+<h2 id="Redis事务"><a href="#Redis事务" class="headerlink" title="Redis事务"></a>Redis事务</h2><p>Redis事务可以一次执行多个命令（允许在一次单独的步骤中执行一组命令），并且带有以下两个重要保证：</p>
+<ol>
+<li>Redis 会将一个事务中的所有命令序列化，然后按排序执行</li>
+<li>执行中不会被其他命令插入，不许出现加塞现象</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/14/2020-04-14-Redis-%E4%BA%8B%E5%8A%A1%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/13/2020-04-13-Redis-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E7%B1%BB%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/13/2020-04-13-Redis-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">Redis 常用命令及类型</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-13 10:47:12" itemprop="dateCreated datePublished" datetime="2020-04-13T10:47:12+08:00">2020-04-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/04/13/2020-04-13-Redis-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E7%B1%BB%E5%9E%8B/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/13/2020-04-13-Redis-常用命令及类型/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>听说过二八定律的应该知道，我们百分之二十的东西是支撑着百分之八十的运作的。所以我们了解和学习一个东西一开始不需要事无巨细的每个都精通，可以优先了解 20%常用的，然后再去根据具体的需要了解剩下的 80%。毕竟时间有限，那么多业务要写。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/13/2020-04-13-Redis-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E7%B1%BB%E5%9E%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/13/2020-04-13-Redis%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -218,7 +1142,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-14 01:42:07" itemprop="dateModified" datetime="2020-04-14T01:42:07+08:00">2020-04-14</time>
+                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,952 +1181,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>配置服务搭建环境也是我们开发人员的一种工作。</p>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>配置服务搭建环境也是我们开发人员的一种工作。好在Redis的配置不难，可以说简单的很。我们也需要看看了解一下每个配置的作用就能轻松搞定。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/04/13/2020-04-13-Redis%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%BA%8C%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
-      <meta itemprop="name" content="Neilyoz">
-      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neilyozの鱼不浪">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">Laravel Eloquent 模型关联关系（二）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-11 16:47:12" itemprop="dateCreated datePublished" datetime="2020-04-11T16:47:12+08:00">2020-04-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-12 17:24:04" itemprop="dateModified" datetime="2020-04-12T17:24:04+08:00">2020-04-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%BA%8C%EF%BC%89/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/11/2020-04-11-Laravel-Eloquent-模型关联关系（二）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面我们已经演示了一对一，一对多，多对多的关系这三种是日常工作中很常见的关联关系，我们会介绍更加复杂的关联关系，分别是远层一对多和多态关联。</p>
-<h2 id="远层一对多关联"><a href="#远层一对多关联" class="headerlink" title="远层一对多关联"></a>远层一对多关联</h2><p>远层一对多在一对多关联的基础上加上了一个修饰词【远层】，意味着这个一对多关系不是直接关联，而是【远层】关联，远层关联需要借助中间表，前面我们讨论多对多关联也是借助中间表，但是远层一对多与其区别在于还是一对多的关联。</p>
-<p>理论和实例结合才容易理解。如果博客系统是针对全球市场的话，可能针对不同的国家推出不同的用户系统和功能，然后中国用户过来就只展示中国用户发布的文章，日本用户过来就只展示日本用户发表的文章，这里就涉及了三张表，存储国家的 <code>countries</code> 表，存储用户的 <code>users</code> 表以及存储文章的 <code>posts</code> 表。</p>
-<p>用户与文章是一对多的关联关系，国家与用户之间是一对多的关联（一个用户只能有一个国际），那么通过用户这张中间表，国家和文章之间也建立起来一对多的关联，只是这个关联不是直接的关联，而是【远层】的关联。</p>
-<p>针对这个情况，我们说国家和文章之间是远层的一对多关联。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%BA%8C%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%B8%80%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
-      <meta itemprop="name" content="Neilyoz">
-      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neilyozの鱼不浪">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">Laravel Eloquent 模型关联关系（一）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-04-11 11:47:12 / 修改时间：21:32:51" itemprop="dateCreated datePublished" datetime="2020-04-11T11:47:12+08:00">2020-04-11</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%B8%80%EF%BC%89/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/11/2020-04-11-Laravel-Eloquent-模型关联关系（一）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Laravel Eloquent 模型支持的关联关系包括以下其中：</p>
-<ul>
-<li>一对一</li>
-<li>一对多</li>
-<li>多对多</li>
-<li>远层一对多</li>
-<li>多态关联（一对一）</li>
-<li>多态关联（一对多）</li>
-<li>多态关联（多对多）</li>
-</ul>
-<p>不着急，我们一个一个的看如何使用。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%B8%80%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/09/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B9%9D%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
-      <meta itemprop="name" content="Neilyoz">
-      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neilyozの鱼不浪">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/09/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B9%9D%EF%BC%89/" class="post-title-link" itemprop="url">Mybatis-入门（九）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-09 21:47:12" itemprop="dateCreated datePublished" datetime="2020-04-09T21:47:12+08:00">2020-04-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-10 17:36:58" itemprop="dateModified" datetime="2020-04-10T17:36:58+08:00">2020-04-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/04/09/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B9%9D%EF%BC%89/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/09/Mybatis-入门（九）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们在实际开发中是不仅仅针对一张表，而是两张或者多张表联动的操作，这里我们经常面对的关系就是一对一，一对多，多对一，多对多等等。</p>
-<p>这里我们搭建环境，我们看看最常见的数据关系，学生和老师的关系</p>
-<ul>
-<li>对于老师来说，一个老师拥有多个学生</li>
-<li>对于学生而言，多个学生都有一个老师</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">create table teachers (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    &#96;id&#96; int(20) not null auto_increment,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    &#96;name&#96; varchar(64) not null,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    PRIMARY KEY (&#96;id&#96;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">) ENGINE&#x3D;InnoDB DEFAULT CHARSET&#x3D;utf8mb4;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">insert into teachers (&#96;name&#96;) values (&#39;燕子李三&#39;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">create table students (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    &#96;id&#96; int(20) not null auto_increment,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    &#96;name&#96; varchar(64) not null,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    &#96;tid&#96; int(20) not null,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    PRIMARY KEY (&#96;id&#96;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">) ENGINE&#x3D;InnoDB DEFAULT CHARSET&#x3D;utf8mb4;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">insert into students (&#96;name&#96;, &#96;tid&#96;) values (&#39;张三&#39;, 1), (&#39;李四&#39;, 1), (&#39;王五&#39;, 1), (&#39;赵六&#39;, 1);</span></pre></td></tr></table></figure>
-
-<p>我们导入数据库，然后开始创建项目。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/09/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B9%9D%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/09/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E5%85%AB%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
-      <meta itemprop="name" content="Neilyoz">
-      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neilyozの鱼不浪">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/09/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E5%85%AB%EF%BC%89/" class="post-title-link" itemprop="url">Mybatis-入门（八）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-04-09 16:47:12 / 修改时间：22:35:39" itemprop="dateCreated datePublished" datetime="2020-04-09T16:47:12+08:00">2020-04-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/04/09/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E5%85%AB%EF%BC%89/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/09/Mybatis-入门（八）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>使用 xml 配置开发，我们 mybatis 也有注解开发。以后我们在公司做项目的时候多数会用到的注解，但是在 Mybatis 中还是 XML 为主。</p>
-<p>我们这里也要回顾下什么是面向接口编程。</p>
-<ul>
-<li>真正的开发中，很多时候我们会面向接口编程</li>
-<li>根本原因：解耦，可拓展，提高复用，分层开发中，上层不用管具体的实现，大家都遵守共同的标准，是的开发变得容易，规范性好</li>
-<li>在一个面向对象的系统中，系统的各种共嗯那个有许许多多不同的对象写作完成，大到各个模块之间的交互，在系统设计之初都是要着重考虑的，这也是系统设计的主要工作内容。面向接口编程就是按照这种思想来编程。</li>
-</ul>
-<p><strong>关于接口的理解</strong></p>
-<ul>
-<li>接口从更深层次的理解，就是定义（规范、约束）与实现（名实分离的原则）的分离</li>
-<li>接口的本身反应了系统设计人员对系统的抽象理解</li>
-<li>接口应有两类：<ul>
-<li>第一类是对一个个体的抽象，它可对应为一个抽象体（abstract class）</li>
-<li>第二类是对一个个体某一方面的抽象，即形成一个抽象面（interface）</li>
-</ul>
-</li>
-<li>个体可能有多个抽象面，抽象体与抽象面是由区别的</li>
-</ul>
-<p><strong>三个面向的区别</strong></p>
-<ul>
-<li>面向对象是指，我们考虑问题时，以对象为单位，考虑它的属性及方法</li>
-<li>面向过程是指，我们考虑问题时，以一个具体的流程（事务过程）为单位，考虑它的实现</li>
-<li>接口设计与非接口设计时针对复用技术而言的，与面向对象（过程）不是一个问题。更多的体现就是对系整体的架构</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/09/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E5%85%AB%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/08/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%83%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
-      <meta itemprop="name" content="Neilyoz">
-      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neilyozの鱼不浪">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/08/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%83%EF%BC%89/" class="post-title-link" itemprop="url">Mybatis-入门（七）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-08 21:26:18" itemprop="dateCreated datePublished" datetime="2020-04-08T21:26:18+08:00">2020-04-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-09 16:10:26" itemprop="dateModified" datetime="2020-04-09T16:10:26+08:00">2020-04-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/04/08/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%83%EF%BC%89/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/08/Mybatis-入门（七）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们的数据库会被请求很多数据，但是如果数据是很多的时候，我们肯定是分批返回而不是全部返回。所以在实际开发中，我们会对数据进行分页。</p>
-<h2 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h2><p>分页操作的本质就是<code>MySQL</code>中的 <code>limit</code> 关键字，之前我们检索数据的做法是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">select * from users;</span></pre></td></tr></table></figure>
-
-<p>实际工作中，我们并不会这么用，因为数据库的数据随着时间的增加肯定是越来越多的，有可能是 1W、10W、100W，但是作为人我们没有办法一次性看这么多，而且性能上也是不允许。一般我们会使用 limit 来对其进行限制</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">-- 这句话就是从头部开始十五条</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">select * from users limit 0, 15;</span></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/08/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%83%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/07/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E5%85%AD%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
-      <meta itemprop="name" content="Neilyoz">
-      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neilyozの鱼不浪">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/07/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E5%85%AD%EF%BC%89/" class="post-title-link" itemprop="url">Mybatis-入门（六）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-07 23:08:26" itemprop="dateCreated datePublished" datetime="2020-04-07T23:08:26+08:00">2020-04-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-08 19:20:48" itemprop="dateModified" datetime="2020-04-08T19:20:48+08:00">2020-04-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/04/07/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E5%85%AD%EF%BC%89/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/07/Mybatis-入门（六）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>日志作为我们开发中的辅助工具，早期我们开发只是使用 <code>System.out.println()</code> 来输出内容，但是在实际开发中我们更青睐于日志系统，Mybatis 也支持日志系统的配置，我们来看看日志系统是如何配置启动的。</p>
-<h2 id="设置日志系统配置"><a href="#设置日志系统配置" class="headerlink" title="设置日志系统配置"></a>设置日志系统配置</h2><p>日志系统的配置相当简单，只需要在 <code>mybatis-config.xml</code> 文件中加入 <code>&lt;settings&gt;</code> 标签即可，注意这里的 <code>&lt;setting&gt;</code> 中 <code>name</code> 和 <code>value</code> 都不能写错，必须和官方提供的文档相同，否则就会有不知名的原因报错，我们为了减少报错，我一般的习惯是直接打开官方文档复制即可。</p>
-<p>支持的类型有：</p>
-<ul>
-<li>SLF4J</li>
-<li>LOG4J 【掌握】</li>
-<li>LOG4J2</li>
-<li>JDK_LOGGING</li>
-<li>COMMONS_LOGGING</li>
-<li>STDOUT_LOGGING【掌握】</li>
-<li>NO_LOGGING</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/07/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E5%85%AD%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/07/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%BA%94%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
-      <meta itemprop="name" content="Neilyoz">
-      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neilyozの鱼不浪">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/07/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%BA%94%EF%BC%89/" class="post-title-link" itemprop="url">Mybatis-入门（五）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-04-07 12:34:44 / 修改时间：19:17:54" itemprop="dateCreated datePublished" datetime="2020-04-07T12:34:44+08:00">2020-04-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/04/07/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%BA%94%EF%BC%89/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/07/Mybatis-入门（五）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们在实际开发的时候，有没有遇到数据库字段和我们实体类中字段不一样的时候。这个时候 Mybatis 有没有提供解决方案呢？作为一个程序框架肯定是考虑到了这点。举个例子我们数据库表像下面这样。直接给出 SQL，在数据库中执行就行了，还是放在我们的 <code>mybatis</code> 数据库中：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> users_test (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">20</span>) <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="string">`name`</span> <span class="built_in">VARCHAR</span>(<span class="number">64</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="string">`pwd`</span> <span class="built_in">VARCHAR</span>(<span class="number">64</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    PRIMARY <span class="keyword">KEY</span>(<span class="string">`id`</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">INNODB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8mb4;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`users_test`</span> (<span class="string">`name`</span>, <span class="string">`pwd`</span>) <span class="keyword">VALUES</span> (<span class="string">'鱼不浪'</span>, <span class="string">'666666'</span>), (<span class="string">'鲁班'</span>, <span class="string">'666666'</span>), (<span class="string">'西施'</span>, <span class="string">'666666'</span>), (<span class="string">'麦特凯'</span>, <span class="string">'666666'</span>);</span></pre></td></tr></table></figure>
-
-<p>而我们的实体类是 <code>com.yubulang.pojo.UserTest</code>，里面的 <code>password</code> 与 数据库表的 <code>pwd</code> 现在是没有办法对应匹配的。我们需要让实体类与他绑定。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yubulang.pojo;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserTest</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> String name;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> String password;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-
-<p>为了复习之前的知识点，我们新建一个项目: <code>mybatis-demo</code>，一路下一步。哈哈哈</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/07/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%BA%94%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/07/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E5%9B%9B%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
-      <meta itemprop="name" content="Neilyoz">
-      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neilyozの鱼不浪">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/07/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E5%9B%9B%EF%BC%89/" class="post-title-link" itemprop="url">Mybatis-入门（四）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-04-07 11:04:53 / 修改时间：12:17:25" itemprop="dateCreated datePublished" datetime="2020-04-07T11:04:53+08:00">2020-04-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/04/07/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E5%9B%9B%EF%BC%89/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/07/Mybatis-入门（四）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在快速搭建 mybatis 环境，实现增删改查的操作，配置的相关操作之后，我们也需要了解一下 Mybatis 的生命周期以及作用域，之所以会提到肯定是在某些场景下容易出现问题。为了避免这些不必要的问题。</p>
-<h2 id="生命周期与作用域"><a href="#生命周期与作用域" class="headerlink" title="生命周期与作用域"></a>生命周期与作用域</h2><img src="/images/mybatis-rumen/生命周期与作用域.png" alt="右连接" style="zoom:100%;" />
-
-<p>不同作用域和生命周期类别是至关重要的，因为错误的使用会导致非常严重的 <strong>并发问题</strong>。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/07/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E5%9B%9B%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/06/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%89%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
-      <meta itemprop="name" content="Neilyoz">
-      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neilyozの鱼不浪">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/06/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%89%EF%BC%89/" class="post-title-link" itemprop="url">Mybatis-入门（三）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-06 18:21:36" itemprop="dateCreated datePublished" datetime="2020-04-06T18:21:36+08:00">2020-04-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-07 12:17:26" itemprop="dateModified" datetime="2020-04-07T12:17:26+08:00">2020-04-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/04/06/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%89%EF%BC%89/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/06/Mybatis-入门（三）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>经过了增删改查的编写，我们对 Mybatis 的使用有了一个大致的了解，但是仅仅知道增删改查的使用还不够，就好像我们使用 Nginx 去作为服务器，我们作为程序员不仅是要用，更多的是去配置他们一样。所以我们也要来学习一下 Mybatis 的配置，也是我们真正要掌握的能力。</p>
-<h2 id="核心配置文件"><a href="#核心配置文件" class="headerlink" title="核心配置文件"></a>核心配置文件</h2><p>官方建议把配置文件命名为：<code>mybatis-config.xml</code>，配置文档中的层级机构如下：</p>
-<ul>
-<li><span id="config">configuration（配置）</span><ul>
-<li>properties（属性）<strong>[完全掌握]</strong></li>
-<li>settings（设置）<strong>[部分掌握]</strong></li>
-<li>typeAliases（类型别名）<strong>[完全掌握]</strong></li>
-<li>typeHandlers（类型处理器）[了解]</li>
-<li>objectFactory（对象工厂）[了解]</li>
-<li>plugins（插件）[了解]</li>
-<li>environments（环境配置）<strong>[完全掌握]</strong><ul>
-<li>environment（环境变量）<ul>
-<li>transactionManager（事务管理器）</li>
-<li>dataSource（数据源）</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>databaseIdProvider（数据库厂商标识）[了解]</li>
-<li>mappers（映射器）<strong>[完全掌握]</strong></li>
-</ul>
-</li>
-</ul>
-<p>看着多，我们一个一个的看。我们进入配置的时候最先配置的肯定是连接数据库的环境配置。所以我们先看环境配置。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/06/Mybatis-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%89%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1226,7 +1208,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1272,14 +1254,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

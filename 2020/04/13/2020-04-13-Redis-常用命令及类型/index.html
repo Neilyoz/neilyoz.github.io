@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta name="baidu-site-verification" content="G7iWpylBLQ" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|0.7:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://neilyoz.github.io').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="前言听说过二八定律的应该知道，我们百分之二十的东西是支撑着百分之八十的运作的。所以我们了解和学习一个东西一开始不需要事无巨细的每个都精通，可以优先了解 20%常用的，然后再去根据具体的需要了解剩下的 80%。毕竟时间有限，那么多业务要写。">
+<meta name="keywords" content="Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis 常用命令及类型">
+<meta property="og:url" content="http:&#x2F;&#x2F;neilyoz.github.io&#x2F;2020&#x2F;04&#x2F;13&#x2F;2020-04-13-Redis-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E7%B1%BB%E5%9E%8B&#x2F;index.html">
+<meta property="og:site_name" content="Neilyozの鱼不浪">
+<meta property="og:description" content="前言听说过二八定律的应该知道，我们百分之二十的东西是支撑着百分之八十的运作的。所以我们了解和学习一个东西一开始不需要事无巨细的每个都精通，可以优先了解 20%常用的，然后再去根据具体的需要了解剩下的 80%。毕竟时间有限，那么多业务要写。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-04-24T14:05:07.219Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://neilyoz.github.io/2020/04/13/2020-04-13-Redis-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E7%B1%BB%E5%9E%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Redis 常用命令及类型 | Neilyozの鱼不浪</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Neilyozの鱼不浪</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">一个简单的手艺人</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/13/2020-04-13-Redis-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E7%B1%BB%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          Redis 常用命令及类型
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-13 10:47:12" itemprop="dateCreated datePublished" datetime="2020-04-13T10:47:12+08:00">2020-04-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/04/13/2020-04-13-Redis-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E7%B1%BB%E5%9E%8B/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/13/2020-04-13-Redis-常用命令及类型/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>听说过二八定律的应该知道，我们百分之二十的东西是支撑着百分之八十的运作的。所以我们了解和学习一个东西一开始不需要事无巨细的每个都精通，可以优先了解 20%常用的，然后再去根据具体的需要了解剩下的 80%。毕竟时间有限，那么多业务要写。</p>
+<a id="more"></a>
+
+<h2 id="常用的-Redis-命令"><a href="#常用的-Redis-命令" class="headerlink" title="常用的 Redis 命令"></a>常用的 Redis 命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>keys *</code></td>
+<td>返回满足的所有键，可以模糊匹配，比如 keys abc* 代表 abc 开头的 key</td>
+</tr>
+<tr>
+<td><code>type key</code></td>
+<td>查看 key 对应的数据类型</td>
+</tr>
+<tr>
+<td><code>exists key</code></td>
+<td>是否存在指定的 key，存在返回 1，不存在返回 0</td>
+</tr>
+<tr>
+<td><code>expire key second</code></td>
+<td>设置某个 key 的过期时间 时间为秒</td>
+</tr>
+<tr>
+<td><code>del key</code></td>
+<td>删除某个 key</td>
+</tr>
+<tr>
+<td><code>ttl key</code></td>
+<td>查看剩余时间，当 key 不存在时返回-2；存在但没有设置剩余生存时间时返回-1，返回 key 的剩余生存时间</td>
+</tr>
+<tr>
+<td><code>persist key</code></td>
+<td>取消过期时间</td>
+</tr>
+<tr>
+<td><code>pexpire key ms</code></td>
+<td>修改 key 的过期时间为毫秒</td>
+</tr>
+<tr>
+<td><code>select</code></td>
+<td>选择数据库 0-15，默认为 16 个数据库</td>
+</tr>
+<tr>
+<td><code>move key dbindex</code></td>
+<td>将当前数据中的 key 转移到其他数据库</td>
+</tr>
+<tr>
+<td><code>randomkey</code></td>
+<td>随机返回一个 key</td>
+</tr>
+<tr>
+<td><code>rename key key1</code></td>
+<td>重命名 key</td>
+</tr>
+<tr>
+<td><code>echo</code></td>
+<td>打印命令</td>
+</tr>
+<tr>
+<td><code>dbsize</code></td>
+<td>查看数据库 key 数量</td>
+</tr>
+<tr>
+<td><code>info</code></td>
+<td>查看数据库信息</td>
+</tr>
+<tr>
+<td><code>config get *</code></td>
+<td>实时传储收到的请求，返回相关的配置</td>
+</tr>
+<tr>
+<td><code>flushdb</code></td>
+<td>清空当前数据库</td>
+</tr>
+<tr>
+<td><code>flushall</code></td>
+<td>清空所有数据库</td>
+</tr>
+</tbody></table>
+<h2 id="expire-使用场景"><a href="#expire-使用场景" class="headerlink" title="expire 使用场景"></a>expire 使用场景</h2><ul>
+<li>限时的优惠活动信息</li>
+<li>网站数据缓存（对于一些需要定时更新的数据，例如积分排行榜）</li>
+<li>手机验证码</li>
+<li>限制网站访客访问频率（例如：一秒钟最多 10 次）</li>
+</ul>
+<h2 id="key的命名建议"><a href="#key的命名建议" class="headerlink" title="key的命名建议"></a>key的命名建议</h2><p>redis单个key允许存入512M大小</p>
+<ul>
+<li>key不要太长，尽量不要超过1024字节，消耗内存会降低查找的效率</li>
+<li>key也不要太短，太短的话，key的可读性降低</li>
+<li>在一个项目中，key最好使用同一的命名规范，例如：<code>user:id:name</code></li>
+<li>key名称不区分大小写</li>
+</ul>
+<h2 id="Redis数据类型"><a href="#Redis数据类型" class="headerlink" title="Redis数据类型"></a>Redis数据类型</h2><h3 id="String类型"><a href="#String类型" class="headerlink" title="String类型"></a>String类型</h3><p>string类型是Redis最基本的数据类型，一个键最大能存储512mb</p>
+<p>string数据结构是简单的key-value类型，value其不仅是string，也可以是数字，是包含很多类型的特殊类型。</p>
+<p>string类型是二进制安全的。意思是redis的string可以包含任何数据。比如序列化的对象进行存储，比如一张图片进行二进制存储，比如一个简单的字符串，数值等等。</p>
+<h4 id="String命令"><a href="#String命令" class="headerlink" title="String命令"></a>String命令</h4><p><strong>赋值语法：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Redis SET命令用于设置给定 key 的值，如果key已经存储值，<span class="built_in">set</span>会复写旧值，且无视类型</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">SET KEY_NAME VALUE </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 如果key不存在，则设值并返回1；如果key存在，则不设值并返回0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 解决分布式锁 方案一，只有在key不存在时设置 key 的值，setnx(<span class="built_in">set</span> <span class="keyword">if</span> not exists)命令</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 指定的key不存在时，才会为key设置指定的值</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">SETNX key value</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> expired 设置key的值为1x，过期时间为10秒，十秒后键值被清理</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">SETNX key 10 1x</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 给指定的 key 对应的值追加 value 至末尾，如果不存在，为其赋值</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">APPEND key_name value</span></pre></td></tr></table></figure>
+
+<p><strong>取值语法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"># Redis GET命令用于获取指定 key 的值</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"># 如果key不存在，返回nil</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"># 如果key储存的值不是字符串类型，返回一个错误</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">GET key_name</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"># 用于获取存储在指定 key 中字符串的子字符串，字符串的截取范围由 start 和 end 两个偏移量决定</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">GETRANGE key start end</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"># 对key所储存的字符串值，获取指定偏移量上的位(bit)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">GETBIT key offset</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"># Getset 命令用于设置指定 key 的值，并返回 key 的旧值，当key不存在时，返回nil</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"># 先取值后赋值操作（先取出旧的值，再修改新的值），当key不存在返回nil</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">GETSET key_name value</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"># 返回 key 所存储字符串的长度</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">STRLEN key</span></pre></td></tr></table></figure>
+
+<p><strong>批量语法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"># 批量写，一次性写入多个值</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">MSET key1 value1 key2 value2...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"># 批量读，一次性读取多个值</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">MGET key1 key2 key3...</span></pre></td></tr></table></figure>
+
+<p><strong>删值语法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"># 删除指定的key，如果存在，返回值数字类型。</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">DEL key_name</span></pre></td></tr></table></figure>
+
+<p><strong>自增/自减（value必须是数字类型哟，否则报错）：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"># INCR 命令将 key 中存储的数字值增1。如果key不存在，那么key的值会先初始化位0，</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"># 然后再执行 INCR 操作</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">INCR key_name</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"># 给指定的 key 加上指定大小的增量</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">INCRBY key_name 增量值</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"># DECR 命令将 key 中存储的数字值减1。如果key不存在，那么key的值会先初始化位0，</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"># 然后再执行 DECR 操作</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">DECR key_name</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"># 给指定的 key 减去指定大小的减值</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">DECRBY key_name</span></pre></td></tr></table></figure>
+
+<h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><ul>
+<li>string通常用于保存单个字符串或JSON字符串数据</li>
+<li>string是二进制安全的，可以把一个图片文件作为字符串储存</li>
+<li>计数器（常规key-value缓存应用，常规技术：粉丝数，文章浏览量）</li>
+</ul>
+<h3 id="Hash类型"><a href="#Hash类型" class="headerlink" title="Hash类型"></a>Hash类型</h3><p>Hash类型是String类型的field和value的映射表，或者说是string的集合。Hash特别适合存储对象，相比较而言，将一个对象类型存储在Hash类型要存储在String类型里占用更少的内存空间，并对整个对象存取。</p>
+<p>可以看成具有key和value的map容器，该类型非常适合存储键值对象的信息。</p>
+<p>如：uname,upass,age等。该类型的数据仅占用很少的磁盘空间（相比于json）</p>
+<p>Redis中每个Hash可以存储<code>2^32 - 1</code>键值对（40多亿）</p>
+<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">赋值语句：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 指定的key，设定 field value</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">HSET key field value</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 同时将多个field-value(域-值)对设置到哈希表 key 中</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">HMSET key field value [field1 value1]...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">取值语句：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 获取存储在Hash中的值，根据field 获取 value</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">HGET key field</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 获取 key 所有给定字段的 value</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">HMGET key field [field1]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 返回Hash表中所有的字段和值</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">HGETALL key</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 获取所有哈希表中的字段</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">HKEYS key</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 获取哈希表中字段的数量</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">HLEN key</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">删除语法：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 删除一个或多个<span class="built_in">hash</span>表字段</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">HDEL key field [field2]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">其它语法：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 只有在字段 field 不存在时，设置哈希表字段的值</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line">HSETNX key field value</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 为哈希表 key 中的指定字段的整数值加上增量 increment</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line">HINCRBY key field increment</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">38</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 为哈希表 key 中的指定字段的浮点数值加上增量 increment</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">39</span></pre></td><td class="code"><pre><span class="line">HINCRBYFLOAT key field increment</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">40</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">41</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看哈希表 key 中，指定的字段是否存在</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">42</span></pre></td><td class="code"><pre><span class="line">HEXISTS key field</span></pre></td></tr></table></figure>
+
+<h4 id="应用场景-1"><a href="#应用场景-1" class="headerlink" title="应用场景"></a>应用场景</h4><p>Hash的应用场景：（存储一个用户信息对象数据）</p>
+<ul>
+<li>常用于存储一个对象</li>
+</ul>
+<blockquote>
+<p>Hash时最接近数据库结构的数据类型，可以将数据库一条记录或程序中一个对象转换成hashmap存放在redis中。</p>
+<p>用户ID为查找的key，存储的value用户对象包含姓名、年龄、生日等信息，如果用普通的key/value结构来存储，主要以下两种存储方式：</p>
+<ol>
+<li>将用户id作为查找key，把其他信息封装成一个对象以序列的方式存储，这种方式缺点是，增加了序列化/反序列化的开销，并且需要修改其中一项信息时，需要把整个对象取回，并修改操作需要对并发进行保护，引入CAS等复杂问题</li>
+<li>这个用户信息对象由多少成员就存储多少个key-value对，用户id+对应的名称作为唯一标识来取得对应属性的值，虽然省去序列化开销和并发问题，但是用户ID为重复存储，如果存在大量这样的数据，内存浪费还是非常可观的。</li>
+</ol>
+</blockquote>
+<h3 id="List-类型"><a href="#List-类型" class="headerlink" title="List 类型"></a>List 类型</h3><p>List类型是一个链表结构的集合，其主要功能有push、pop、获取元素等。更详细的说，List类型是一个双端链表的节后，我们可以通过相关操作进行集合的头部或者尾部添加和删除元素，List的设计非常简单精巧，及可以作为栈，也可以作为队列，满足绝大多数的需求。</p>
+<blockquote>
+<p>按照插入顺序排序，你可以添加一个元素到列表头部或者尾部，一个列表最多可以包含 2^32-1 个元素（40忆个元素）类似Java中的LinkedList</p>
+</blockquote>
+<h4 id="常用命令-1"><a href="#常用命令-1" class="headerlink" title="常用命令"></a>常用命令</h4><p><strong>赋值语法：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将一个或多个值插入到列表头部(从左侧添加)</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">LPUSH key value1 [value2]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 在列表中添加一个或多个值（从右侧添加）</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">RPUSH key value1 [value2]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将一个值插入到已存在的列表头部。如果列表不存在，操作无效</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">LPUSHX key value</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 一个值插入已存在的列表尾部（最右边）。如果列表不在，操作无效</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">RPUSHX key value</span></pre></td></tr></table></figure>
+
+<p><strong>取值操作：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 获取列表长度</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">LLEN key</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 通过索引获取列表中的元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">LINDEX key index</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 获取列表指定范围的元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">LRANGE key start end</span></pre></td></tr></table></figure>
+
+<blockquote>
+<p>描述：返回列表中指定区间内的元素，区间以偏移量start和end指定。</p>
+<p>其中0表示列表第一个元素，1表示第二个元素，以此类推</p>
+<p>也可以负数下标，以-1表示列表的最后一个元素，-2表示列表的倒数第二个元素，以此类推</p>
+</blockquote>
+<p><strong>删除操作：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 移出并获取列表的第一个元素（从左侧删除）</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">LPOP key</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 移出列表的最后一个元素，返回值为移除的元素（从右侧删除）</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">RPOP key</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 移出并获取列表的第一个元素，如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">BLPOP key1 [key2] timeout</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 移出并获取列表的最后一个元素，如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">BRPOP key1 [key2] timeout</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 对一个列表进行裁剪（trim），就是说，让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">LTRIM key start stop</span></pre></td></tr></table></figure>
+
+<p><strong>修改操作：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 通过索引设置列表元素的值</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">LSET key index value</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 在列表的元素前或者后插入元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将值 value 插入到列表 key 当中，位于值 world 之前或之后</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">LINSERT key BEFORE|AFTER world value</span></pre></td></tr></table></figure>
+
+<h4 id="高级命令"><a href="#高级命令" class="headerlink" title="高级命令"></a>高级命令</h4><p>高级语法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 移除列表的最后一个元素，并将该元素添加到另一个列表并返回</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">RPOPLPUSH source destination</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 示例描述：</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> a1的最后元素移到a2的左侧</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">RPOPLPUSH a1 a2 </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 循环列表，将最后元素移到最左侧</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">RPOPLPUSH a1 a1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 从列表中弹出一个值，将弹出的元素插入到另外一个列表中并返回它；如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">BRPOPLPUSH source destination timeout</span></pre></td></tr></table></figure>
+
+<h4 id="应用场景-2"><a href="#应用场景-2" class="headerlink" title="应用场景"></a>应用场景</h4><p>项目常用：</p>
+<ol>
+<li><p>对数据大的集合数据删减</p>
+<p>列表数据显示、关注列表、粉丝列表、留言评论、分页、热点新闻（top5）等</p>
+<p>利用LRANGE还可以很方便的实现分页的功能，在博客系统中，每篇博文的评论也可以存入一个单独的list中</p>
+</li>
+<li><p>任务队列</p>
+<p>List通常用来实现一个消息队列，而且可以确保先后顺序，不必像MySQL那样还要通过ORDER BY进行排序</p>
+</li>
+</ol>
+<blockquote>
+<p>任务队列介绍（生产者和消费者模式）：</p>
+<p>在处理web客户端发送的命令请求，某些操作的执行时间会比我们预期的更长一些，通过将等待执行任务的相关信息放入队列里面，并在之后对队列进行处理，用户可以推迟执行那些需要一段时间才能完成的操作，这种将工作交给任务处理器来执行的做法被称为任务队列(Task Queue)</p>
+</blockquote>
+<h3 id="Set类型"><a href="#Set类型" class="headerlink" title="Set类型"></a>Set类型</h3><p>Redis的Set是String类型的无序集合。集合成员是唯一的，这就意味着集合中不能出现重复数据。Redis中集合是通过哈希表实现的，set是通过hashtable实现的。</p>
+<p>集合中最大的成员数为 <code>2^32 - 1</code> （40多亿个成员），类似于Java中的HashTable集合</p>
+<h4 id="常用命令-2"><a href="#常用命令-2" class="headerlink" title="常用命令"></a>常用命令</h4><p><strong>赋值语法：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 向集合添加一个或多个成员</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">SADD key member1 [member2]</span></pre></td></tr></table></figure>
+
+<p><strong>取值语法：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 获取集合的成员数</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">SCARD key</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 返回集合中的所有成员</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">SMEMBERS key</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 判断 member 元素是否是集合 key 的成员</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">SISMEMBER key member</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 返回集合中一个或多个随机数</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">SRANDMEMBER key [count]</span></pre></td></tr></table></figure>
+
+<p><strong>删除语法：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 移除集合中一个或多个成员</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">SREM key member1 [member2]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 移除并返回集合中的一个随机元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">SPOP key [count]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将 member 元素从 <span class="built_in">source</span> 集合移动到 destination 集合</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">SMOVE source destination member</span></pre></td></tr></table></figure>
+
+<p><strong>差集语法：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 返回给点所有集合的差值（左侧）</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">SDIFF key1 key2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 返回给定所有集合的差集并存储在 destination 中</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">SDIFFSTORE destination key1 [key2]</span></pre></td></tr></table></figure>
+
+<p><strong>交集语法：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 返回给定所有集合的交集（所有元素）</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">SINTER key1 [key2]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 返回给定所有集合的交集并存储在 destination 中</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">SINTERSTORE destination key1 [key2]</span></pre></td></tr></table></figure>
+
+<p><strong>并集语法：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 返回所有给定集合的并集</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">SUNION key1 [key2]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 所有给定集合的并集存储在 destination 中</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">SUNIONSTORE destination key1 [key2]</span></pre></td></tr></table></figure>
+
+<h4 id="应用场景-3"><a href="#应用场景-3" class="headerlink" title="应用场景"></a>应用场景</h4><p>常应用于：对两个集合间的数据计算进行交集、并集、差集计算</p>
+<ol>
+<li>利用集合操作，可以取不同兴趣圈子的交集，以非常方便的实现如共同关注，共同喜好，二度好友等功能。对上面的所有集合操作，你还可以使用不同的命令选择结果返回给客户端还是存储到一个新的集合中。</li>
+<li>利用唯一性，可以统计访问网站的所有独立ip、存取当天[某天]的活跃用户列表</li>
+</ol>
+<h3 id="ZSet类型"><a href="#ZSet类型" class="headerlink" title="ZSet类型"></a>ZSet类型</h3><p>有序集合（sorted set）</p>
+<ul>
+<li>Redis有序集合和集合一样也是string类型元素的集合，且不允许重复的成员</li>
+<li>不同的是每个元素都会关联一个double类型的分数，redis正是通过分数来为集合中的成员进行从小到大的排序</li>
+<li>有序集合的成员是唯一的，但（score）却可以重复</li>
+<li>集合是通过哈希实现的。集合最大的成员数为<code>2^32 - 1</code>（每个集合可存放40亿个成员）。</li>
+</ul>
+<h4 id="常用命令-3"><a href="#常用命令-3" class="headerlink" title="常用命令"></a>常用命令</h4><p><strong>赋值语法：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 向有序集合添加一个或多个成员，或者更新已存在成员的分数</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">ZADD key score1 member1 [score2 member2]</span></pre></td></tr></table></figure>
+
+<p><strong>取值语法：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 获取有序集合的成员数</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">ZCARD key</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 计算在有序集合中指定区间分数的成员</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">ZCOUNT key min max</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 返回有序集合中指定成员的索引</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">ZRANGE key member</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 通过索引区间返回有序集合指定区间内的成员（低到高）</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">ZRANGE key start stop [WITHSCORES]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 通过分数返回有序集合指定区间内的成员</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 返回有序集合中指定区间内的成员，通过索引、分数从高到低</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">ZREVRANGE key start stop [WITHSCORES]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 返回有序集合中指定分数分区区间内的成员，分数从高到低排序</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">ZREVRANGESCORE key max min [WITHSCORES]</span></pre></td></tr></table></figure>
+
+<p><strong>删除语法：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 删除集合</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">DEL key</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 移除有序集合中的一个或多个成员</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">ZREM key member [member1 ...]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 移除有序集合中给定的排名区间的所有成员（第一名是0）（低到高排序）</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">ZREMRANGEBYRANK key start stop</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 移除有序集合中给定的分数区间的所有成员</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">ZREMRANGEBYSCORE key min max</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 增加 member 元素的分数 increment，返回值是更改后的分数</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">ZINCRBY key increment member</span></pre></td></tr></table></figure>
+
+<h4 id="应用场景-4"><a href="#应用场景-4" class="headerlink" title="应用场景"></a>应用场景</h4><p>销售排行，积分排行</p>
+<blockquote>
+<ul>
+<li>Twitter 的 public timeline 可以以发表时间作为 score 来储存，这样获取时就是自动按时间排好序的</li>
+<li>一个存储全班同学成绩的 sorted set，其集合 value 可以是同学的学号，而 score 就可以是其考的分数，这样在数据插入集合的时候，就已经进行了天然的排序。</li>
+<li>用sorted set来做带权重的队列，普通消息的score 为1，重要消息的score为2，然后工作线程可以选择score的倒序来获取工作任务。让重要的任务优先执行。</li>
+</ul>
+</blockquote>
+<h3 id="Hyperloglog类型"><a href="#Hyperloglog类型" class="headerlink" title="Hyperloglog类型"></a>Hyperloglog类型</h3><p>Redis HyperLogLog 是用来做基数统计的算法，HyperLogLog 的优点是，在输入元素的数量或者体积非常非常大时，计算基数所需的空间总是固定 的、并且是很小的。</p>
+<p>在 Redis 里面，每个 HyperLogLog 键只需要花费 12 KB 内存，就可以计算接近 2^64 个不同元素的基 数。这和计算基数时，元素越多耗费内存就越多的集合形成鲜明对比。</p>
+<p>但是，因为 HyperLogLog 只会根据输入元素来计算基数，而不会储存输入元素本身，所以 HyperLogLog 不能像集合那样，返回输入的各个元素。</p>
+<h4 id="什么是基数"><a href="#什么是基数" class="headerlink" title="什么是基数?"></a>什么是基数?</h4><p>比如数据集 {1, 3, 5, 7, 5, 7, 8}， 那么这个数据集的基数集为 {1, 3, 5 ,7, 8}, 基数(不重复元素)为5。 基数估计就是在误差可接受的范围内，快速计算基数。</p>
+<h4 id="常用命令-4"><a href="#常用命令-4" class="headerlink" title="常用命令"></a>常用命令</h4><p><strong>赋值语法：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 添加指定元素到 HyperLogLog 中</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">PFADD key element [element ...]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将多个 HyperLogLog 合并为一个 HyperLogLog</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">PFMERGE destkey sourcekey [sourcekey ...]</span></pre></td></tr></table></figure>
+
+<p><strong>取值语法:</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 返回给定 HyperLogLog 的基数估算值。</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">PFCOUNT key [key ...]</span></pre></td></tr></table></figure>
+
+
+
+<h4 id="应用场景-5"><a href="#应用场景-5" class="headerlink" title="应用场景"></a>应用场景</h4><p>基数不大，数据量不大就用不上，会有点大材小用浪费空间</p>
+<p>有局限性，就只是统计基数数量，而没办法去知道具体的内容是什么</p>
+<blockquote>
+<ul>
+<li>统计注册IP数</li>
+<li>统计每日访问IP数</li>
+<li>统计页面实时UV数</li>
+<li>统计在线用户数</li>
+<li>统计用户每天搜索不同词条的个数</li>
+<li>统计真实文章阅读数</li>
+</ul>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>掌握这些基本的redis操作已经是不在话下，当然具体怎么用用哪个类型还是要大家多多动手实践。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/13/2020-04-13-Redis%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/" rel="prev" title="Redis配置详解">
+      <i class="fa fa-chevron-left"></i> Redis配置详解
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/14/2020-04-14-Redis-%E4%BA%8B%E5%8A%A1%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%8B/" rel="next" title="Redis 事务了解一下">
+      Redis 事务了解一下 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的-Redis-命令"><span class="nav-number">2.</span> <span class="nav-text">常用的 Redis 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#expire-使用场景"><span class="nav-number">3.</span> <span class="nav-text">expire 使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#key的命名建议"><span class="nav-number">4.</span> <span class="nav-text">key的命名建议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis数据类型"><span class="nav-number">5.</span> <span class="nav-text">Redis数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#String类型"><span class="nav-number">5.1.</span> <span class="nav-text">String类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#String命令"><span class="nav-number">5.1.1.</span> <span class="nav-text">String命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用场景"><span class="nav-number">5.1.2.</span> <span class="nav-text">应用场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash类型"><span class="nav-number">5.2.</span> <span class="nav-text">Hash类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用命令"><span class="nav-number">5.2.1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用场景-1"><span class="nav-number">5.2.2.</span> <span class="nav-text">应用场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List-类型"><span class="nav-number">5.3.</span> <span class="nav-text">List 类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用命令-1"><span class="nav-number">5.3.1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#高级命令"><span class="nav-number">5.3.2.</span> <span class="nav-text">高级命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用场景-2"><span class="nav-number">5.3.3.</span> <span class="nav-text">应用场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set类型"><span class="nav-number">5.4.</span> <span class="nav-text">Set类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用命令-2"><span class="nav-number">5.4.1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用场景-3"><span class="nav-number">5.4.2.</span> <span class="nav-text">应用场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ZSet类型"><span class="nav-number">5.5.</span> <span class="nav-text">ZSet类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用命令-3"><span class="nav-number">5.5.1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用场景-4"><span class="nav-number">5.5.2.</span> <span class="nav-text">应用场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hyperloglog类型"><span class="nav-number">5.6.</span> <span class="nav-text">Hyperloglog类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是基数"><span class="nav-number">5.6.1.</span> <span class="nav-text">什么是基数?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用命令-4"><span class="nav-number">5.6.2.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用场景-5"><span class="nav-number">5.6.3.</span> <span class="nav-text">应用场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Neilyoz"
+      src="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+  <p class="site-author-name" itemprop="name">Neilyoz</p>
+  <div class="site-description" itemprop="description">分享一些软件开发的经验，以及交流软件开发经验的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Neilyoz</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+  <script pjax>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://neilyoz.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: {page: {
+            url: "http://neilyoz.github.io/2020/04/13/2020-04-13-Redis-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E7%B1%BB%E5%9E%8B/",
+            identifier: "2020/04/13/2020-04-13-Redis-常用命令及类型/",
+            title: "Redis 常用命令及类型"
+          }
+        }
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://neilyoz.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+</script>
+
+    </div>
+</body>
+</html>
