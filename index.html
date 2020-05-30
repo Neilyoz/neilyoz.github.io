@@ -187,6 +187,114 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/05/30/2020-05-30-Docker-%E5%AE%B9%E5%99%A8%E4%BA%92%E7%9B%B8%E8%BF%9E%E6%8E%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/30/2020-05-30-Docker-%E5%AE%B9%E5%99%A8%E4%BA%92%E7%9B%B8%E8%BF%9E%E6%8E%A5/" class="post-title-link" itemprop="url">Docker 容器互相连接</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-30 11:46:21 / 修改时间：13:51:59" itemprop="dateCreated datePublished" datetime="2020-05-30T11:46:21+08:00">2020-05-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/05/30/2020-05-30-Docker-%E5%AE%B9%E5%99%A8%E4%BA%92%E7%9B%B8%E8%BF%9E%E6%8E%A5/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/05/30/2020-05-30-Docker-容器互相连接/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近看Hyperf有个Docker安装环境，直接运行了。按照官方的教材运行起来是没有问题，可是光一个服务端没啥用啊，PHP 没有搭配 MySQL 就太没有灵魂了。既然是开发环境，我要怎么才能让已经运行的Hyperf容器连接到新建的MySQL容器呢？</p>
+<h2 id="运行-Docker-Hyperf"><a href="#运行-Docker-Hyperf" class="headerlink" title="运行 Docker Hyperf"></a>运行 Docker Hyperf</h2><p>Hyperf 是基于 swoole 的，但是 swoole 在 window 上运行不了，只能借助 Docker 了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">docker run --name myhyperf -v $pwd/skeleten:/hyperf-skeleton -p 9501:9501 -dit --entrypoint /bin/sh hyperf/hyperf:7.4-alpine-v3.9-cli-v4.5.2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 镜像容器运行后，在容器内安装 Composer</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">wget https://github.com/composer/composer/releases/download/1.10.6/composer.phar</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">chmod u+x composer.phar</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">mv composer.phar /usr/local/bin/composer</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将 Composer 镜像设置为阿里云镜像，加速国内下载速度</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">composer config -g repo.packagist composer https://mirrors.aliyun.com/composer</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 通过 Composer 安装 hyperf/hyperf-skeleton 项目</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">composer create-project hyperf/hyperf-skeleton</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入安装好的 Hyperf 项目目录</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">cd hyperf-skeleton</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 启动 Hyperf</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">php bin/hyperf.php start</span></pre></td></tr></table></figure>
+
+<p>浏览器访问：<a href="http://127.0.0.1:9501" target="_blank" rel="noopener">http://127.0.0.1:9501</a> OJBK ~</p>
+<p>到这里我们要解决的问题才正真开始，我们需要有MySQL去配合Hyperf。我们需要怎么做呢？</p>
+<h2 id="开始解决这个问题"><a href="#开始解决这个问题" class="headerlink" title="开始解决这个问题"></a>开始解决这个问题</h2><p>创建网络：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">docker network create hyperfdb_network</span></pre></td></tr></table></figure>
+
+<p>创建使用这个网络创建MySQL：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">docker run --name mydb --net=hyperfdb_network -p 3306:3306 -it -v $pwd/data/mysql:/var/lib/mysql:rw -v $pwd/data/mysql:/var/lib/mysql-logs:rw -v $pwd/config/mysql/conf.d:/etc/mysql/conf.d:ro -e MYSQL_ROOT_PASSWORD=123456 --restart=always -d mysql:8.0.20</span></pre></td></tr></table></figure>
+
+<p>将已存在的容器连接到mydb相同的网络</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> hyperfdb_network 是刚才创建的网络名称</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> myhyperf 是hyperf容器的名称</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">docker network connect hyperfdb_network myhyperf</span></pre></td></tr></table></figure>
+
+<p>我们进入我们 myhyperf 容器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">docker exec -it myhyperf sh</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">ping mydb</span></pre></td></tr></table></figure>
+
+<p>我们发现已经通了。</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>我们虽然是ping通了网络，但是MySQL使用不知道是否准确。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$dsn = <span class="string">"mysql:dbname=test;host=mydb"</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$db_user = <span class="string">'root'</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$db_pass = <span class="string">'123456'</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    $pdo = <span class="keyword">new</span> PDO($dsn, $db_user, $db_pass);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">echo</span> <span class="string">'连接成功'</span> . PHP_EOL;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125; <span class="keyword">catch</span> (PDOException $e) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">echo</span> <span class="string">'数据库连接失败'</span> . $e-&gt;getMessage();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Docker做开发环境还是挺舒服的。快速搭建就开始学习写代码了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/29/2020-04-29-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -212,7 +320,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-04-29 22:12:23 / 修改时间：22:12:57" itemprop="dateCreated datePublished" datetime="2020-04-29T22:12:23+08:00">2020-04-29</time>
+              <time title="创建时间：2020-04-29 22:12:23 / 修改时间：22:23:55" itemprop="dateCreated datePublished" datetime="2020-04-29T22:12:23+08:00">2020-04-29</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -310,7 +418,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-26 22:30:37" itemprop="dateModified" datetime="2020-04-26T22:30:37+08:00">2020-04-26</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -413,7 +521,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-25 01:21:21" itemprop="dateModified" datetime="2020-04-25T01:21:21+08:00">2020-04-25</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -516,7 +624,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -615,7 +723,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -714,7 +822,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -822,7 +930,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -921,7 +1029,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1028,7 +1136,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1103,108 +1211,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/14/2020-04-14-Redis-%E4%BA%8B%E5%8A%A1%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
-      <meta itemprop="name" content="Neilyoz">
-      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neilyozの鱼不浪">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/14/2020-04-14-Redis-%E4%BA%8B%E5%8A%A1%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%8B/" class="post-title-link" itemprop="url">Redis 事务了解一下</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-14 23:23:17" itemprop="dateCreated datePublished" datetime="2020-04-14T23:23:17+08:00">2020-04-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-24 22:05:07" itemprop="dateModified" datetime="2020-04-24T22:05:07+08:00">2020-04-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/04/14/2020-04-14-Redis-%E4%BA%8B%E5%8A%A1%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%8B/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/14/2020-04-14-Redis-事务了解一下/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>和MySQL一样，我们的Redis也支持事务操作，事务操作可以执行多个命令（按顺序串行化执行，执行中不会被其他命令插入）。</p>
-<h2 id="Redis事务"><a href="#Redis事务" class="headerlink" title="Redis事务"></a>Redis事务</h2><p>Redis事务可以一次执行多个命令（允许在一次单独的步骤中执行一组命令），并且带有以下两个重要保证：</p>
-<ol>
-<li>Redis 会将一个事务中的所有命令序列化，然后按排序执行</li>
-<li>执行中不会被其他命令插入，不许出现加塞现象</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/14/2020-04-14-Redis-%E4%BA%8B%E5%8A%A1%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1255,7 +1261,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

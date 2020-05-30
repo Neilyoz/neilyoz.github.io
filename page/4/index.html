@@ -187,6 +187,114 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/03/12/Laravel%E6%89%A9%E5%B1%95%E5%8C%85%E7%9A%84%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/12/Laravel%E6%89%A9%E5%B1%95%E5%8C%85%E7%9A%84%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">Laravel扩展包的开发</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-12 01:07:41" itemprop="dateCreated datePublished" datetime="2020-03-12T01:07:41+08:00">2020-03-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/03/12/Laravel%E6%89%A9%E5%B1%95%E5%8C%85%E7%9A%84%E5%BC%80%E5%8F%91/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/12/Laravel扩展包的开发/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Laravel在2020年03月02日，发布了7.0版本，从3用到7一直都是用别人开发的包，由于疫情真的但是日了狗，在家找工作都不方便，怎么办学习吖，程序员哪里有休息可言。</p>
+<h2 id="扩展包的开发"><a href="#扩展包的开发" class="headerlink" title="扩展包的开发"></a>扩展包的开发</h2><h3 id="1-创建一个新项目，初始化扩展包配置"><a href="#1-创建一个新项目，初始化扩展包配置" class="headerlink" title="1. 创建一个新项目，初始化扩展包配置"></a>1. 创建一个新项目，初始化扩展包配置</h3><p>首先创建一个全新的Laravel项目：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">composer create-project laravel/laravel package_demo --prefer-dist</span></pre></td></tr></table></figure>
+
+<p>接下来，在项目中创建目录<code>package/{your_name}/{your_package_name}</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">mkdir -p packages/neilyoz/plugins</span></pre></td></tr></table></figure>
+
+<p>进入到这个目录，执行<code>composer init</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">cd packages/neilyoz/plugins</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">composer init</span></pre></td></tr></table></figure>
+
+<p>接下来的就是看你具体的配置包信息了。执行完成后会生成一个composer文件。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">"name"</span>: <span class="string">"neilyoz/plugins"</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">"type"</span>: <span class="string">"library"</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">"authors"</span>: [</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">            <span class="attr">"name"</span>: <span class="string">"Neilyoz"</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">            <span class="attr">"email"</span>: <span class="string">"neilyoz@foxmail.com"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    ],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">"require"</span>: &#123;&#125;,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">"description"</span>: <span class="string">"plugins system build with laravel."</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/12/Laravel%E6%89%A9%E5%B1%95%E5%8C%85%E7%9A%84%E5%BC%80%E5%8F%91/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/03/11/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%85%8D%E7%BD%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -218,7 +326,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-06 00:14:00" itemprop="dateModified" datetime="2020-04-06T00:14:00+08:00">2020-04-06</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -325,7 +433,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-06 00:14:00" itemprop="dateModified" datetime="2020-04-06T00:14:00+08:00">2020-04-06</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -443,7 +551,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-06 00:14:00" itemprop="dateModified" datetime="2020-04-06T00:14:00+08:00">2020-04-06</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -540,7 +648,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-06 00:14:00" itemprop="dateModified" datetime="2020-04-06T00:14:00+08:00">2020-04-06</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -637,7 +745,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-06 00:14:00" itemprop="dateModified" datetime="2020-04-06T00:14:00+08:00">2020-04-06</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -746,7 +854,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-06 00:14:00" itemprop="dateModified" datetime="2020-04-06T00:14:00+08:00">2020-04-06</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -858,7 +966,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-06 00:14:00" itemprop="dateModified" datetime="2020-04-06T00:14:00+08:00">2020-04-06</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -957,7 +1065,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-06 00:14:00" itemprop="dateModified" datetime="2020-04-06T00:14:00+08:00">2020-04-06</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1063,7 +1171,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-06 00:14:00" itemprop="dateModified" datetime="2020-04-06T00:14:00+08:00">2020-04-06</time>
+                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1134,120 +1242,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/03/04/0x01Promise%E7%90%86%E8%A7%A3%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%83%A8%E5%88%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
-      <meta itemprop="name" content="Neilyoz">
-      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neilyozの鱼不浪">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/04/0x01Promise%E7%90%86%E8%A7%A3%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%83%A8%E5%88%86/" class="post-title-link" itemprop="url">0x01 Promise理解第一个部分</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-04 02:35:24" itemprop="dateCreated datePublished" datetime="2020-03-04T02:35:24+08:00">2020-03-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-06 00:14:00" itemprop="dateModified" datetime="2020-04-06T00:14:00+08:00">2020-04-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/03/04/0x01Promise%E7%90%86%E8%A7%A3%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%83%A8%E5%88%86/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/04/0x01Promise理解第一个部分/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="基础铺垫"><a href="#基础铺垫" class="headerlink" title="基础铺垫"></a>基础铺垫</h2><p><code>event loop</code> 它的执行顺序：</p>
-<ul>
-<li>一开始整个脚本作为一个宏任务执行</li>
-<li>执行过程中同步代码直接执行，宏任务进入宏任务队列，微任务进入微任务队列</li>
-<li>当红任务执行完出队，检查微任务列表，有则一次执行，直到全部执行完</li>
-<li>执行浏览器 UI 线程渲染工作</li>
-<li>检查是否有<code>Web Worker</code>任务，有则执行</li>
-<li>执行完本轮的宏任务，回到 2，依次循环，直到宏任务和微任务队列都为空</li>
-</ul>
-<p><strong>微任务：</strong></p>
-<ul>
-<li>MutationObserver、Promise.then()或 reject()、Promise 为基础开发的其它技术，比如 feth Api v8 的垃圾回收过程、Node 独有的 process.nextTick。</li>
-</ul>
-<p><strong>宏任务：</strong></p>
-<ul>
-<li>script、setTimeout、setInterval、setImmdiate、I/O、UI rendering</li>
-</ul>
-<p>注意：所有任务开始的时候，由于宏任务包括了 script，所以浏览器会先执行一个宏任务，在这个过程中你看到的延迟任务（例如：setTimeout）将放到下一轮宏任务中执行。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/04/0x01Promise%E7%90%86%E8%A7%A3%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%83%A8%E5%88%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1298,7 +1292,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -47,18 +47,18 @@
   };
 </script>
 
-  <meta name="description" content="前言相比 Memcache 而言，Redis 可以把数据持久化到我们的磁盘上。来保证缓存的数据不会应为断电而丢失。 简介数据存放于：  内存：高效、断电（关机）内存数据会丢失 硬盘：读写速度慢于内存，断电数据不会丢失   Redis 持久化存储支持两种方式：RDB 和 AOF。  RDB 一定时间存储文件 AOF 默认每秒存储历史命令  Redis 支持持久化的内存数据库，也就是Redis需要经营">
-<meta name="keywords" content="Redis">
+  <meta name="description" content="前言最近看Hyperf有个Docker安装环境，直接运行了。按照官方的教材运行起来是没有问题，可是光一个服务端没啥用啊，PHP 没有搭配 MySQL 就太没有灵魂了。既然是开发环境，我要怎么才能让已经运行的Hyperf容器连接到新建的MySQL容器呢？ 运行 Docker HyperfHyperf 是基于 swoole 的，但是 swoole 在 window 上运行不了，只能借助 Docker">
+<meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis 持久化">
-<meta property="og:url" content="http:&#x2F;&#x2F;neilyoz.github.io&#x2F;2020&#x2F;04&#x2F;15&#x2F;2020-04-15-Redis-%E6%8C%81%E4%B9%85%E5%8C%96&#x2F;index.html">
+<meta property="og:title" content="Docker 容器互相连接">
+<meta property="og:url" content="http:&#x2F;&#x2F;neilyoz.github.io&#x2F;2020&#x2F;05&#x2F;30&#x2F;2020-05-30-Docker-%E5%AE%B9%E5%99%A8%E4%BA%92%E7%9B%B8%E8%BF%9E%E6%8E%A5&#x2F;index.html">
 <meta property="og:site_name" content="Neilyozの鱼不浪">
-<meta property="og:description" content="前言相比 Memcache 而言，Redis 可以把数据持久化到我们的磁盘上。来保证缓存的数据不会应为断电而丢失。 简介数据存放于：  内存：高效、断电（关机）内存数据会丢失 硬盘：读写速度慢于内存，断电数据不会丢失   Redis 持久化存储支持两种方式：RDB 和 AOF。  RDB 一定时间存储文件 AOF 默认每秒存储历史命令  Redis 支持持久化的内存数据库，也就是Redis需要经营">
+<meta property="og:description" content="前言最近看Hyperf有个Docker安装环境，直接运行了。按照官方的教材运行起来是没有问题，可是光一个服务端没啥用啊，PHP 没有搭配 MySQL 就太没有灵魂了。既然是开发环境，我要怎么才能让已经运行的Hyperf容器连接到新建的MySQL容器呢？ 运行 Docker HyperfHyperf 是基于 swoole 的，但是 swoole 在 window 上运行不了，只能借助 Docker">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-29T14:23:55.201Z">
+<meta property="og:updated_time" content="2020-05-30T05:51:59.976Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://neilyoz.github.io/2020/04/15/2020-04-15-Redis-%E6%8C%81%E4%B9%85%E5%8C%96/">
+<link rel="canonical" href="http://neilyoz.github.io/2020/05/30/2020-05-30-Docker-%E5%AE%B9%E5%99%A8%E4%BA%92%E7%9B%B8%E8%BF%9E%E6%8E%A5/">
 
 
 <script id="page-configurations">
@@ -72,7 +72,7 @@
   };
 </script>
 
-  <title>Redis 持久化 | Neilyozの鱼不浪</title>
+  <title>Docker 容器互相连接 | Neilyozの鱼不浪</title>
   
 
 
@@ -188,7 +188,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/15/2020-04-15-Redis-%E6%8C%81%E4%B9%85%E5%8C%96/">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/05/30/2020-05-30-Docker-%E5%AE%B9%E5%99%A8%E4%BA%92%E7%9B%B8%E8%BF%9E%E6%8E%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
@@ -201,7 +201,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          Redis 持久化
+          Docker 容器互相连接
         </h2>
 
         <div class="post-meta">
@@ -210,24 +210,18 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-04-15 11:03:27" itemprop="dateCreated datePublished" datetime="2020-04-15T11:03:27+08:00">2020-04-15</time>
+              <time title="创建时间：2020-05-30 11:46:21 / 修改时间：13:51:59" itemprop="dateCreated datePublished" datetime="2020-05-30T11:46:21+08:00">2020-05-30</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
                   </a>
                 </span>
             </span>
@@ -241,8 +235,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2020/04/15/2020-04-15-Redis-%E6%8C%81%E4%B9%85%E5%8C%96/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/15/2020-04-15-Redis-持久化/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2020/05/30/2020-05-30-Docker-%E5%AE%B9%E5%99%A8%E4%BA%92%E7%9B%B8%E8%BF%9E%E6%8E%A5/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/05/30/2020-05-30-Docker-容器互相连接/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -257,58 +251,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>相比 Memcache 而言，Redis 可以把数据持久化到我们的磁盘上。来保证缓存的数据不会应为断电而丢失。</p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>数据存放于：</p>
-<ul>
-<li>内存：高效、断电（关机）内存数据会丢失</li>
-<li>硬盘：读写速度慢于内存，断电数据不会丢失</li>
-</ul>
-<blockquote>
-<p>Redis 持久化存储支持两种方式：RDB 和 AOF。</p>
-<ul>
-<li>RDB 一定时间存储文件</li>
-<li>AOF 默认每秒存储历史命令</li>
-</ul>
-<p>Redis 支持持久化的内存数据库，也就是Redis需要经营将内存中的数据同步到硬盘来保证持久化。</p>
-</blockquote>
-<a id="more"></a>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近看Hyperf有个Docker安装环境，直接运行了。按照官方的教材运行起来是没有问题，可是光一个服务端没啥用啊，PHP 没有搭配 MySQL 就太没有灵魂了。既然是开发环境，我要怎么才能让已经运行的Hyperf容器连接到新建的MySQL容器呢？</p>
+<h2 id="运行-Docker-Hyperf"><a href="#运行-Docker-Hyperf" class="headerlink" title="运行 Docker Hyperf"></a>运行 Docker Hyperf</h2><p>Hyperf 是基于 swoole 的，但是 swoole 在 window 上运行不了，只能借助 Docker 了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">docker run --name myhyperf -v $pwd/skeleten:/hyperf-skeleton -p 9501:9501 -dit --entrypoint /bin/sh hyperf/hyperf:7.4-alpine-v3.9-cli-v4.5.2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 镜像容器运行后，在容器内安装 Composer</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">wget https://github.com/composer/composer/releases/download/1.10.6/composer.phar</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">chmod u+x composer.phar</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">mv composer.phar /usr/local/bin/composer</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将 Composer 镜像设置为阿里云镜像，加速国内下载速度</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">composer config -g repo.packagist composer https://mirrors.aliyun.com/composer</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 通过 Composer 安装 hyperf/hyperf-skeleton 项目</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">composer create-project hyperf/hyperf-skeleton</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入安装好的 Hyperf 项目目录</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">cd hyperf-skeleton</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 启动 Hyperf</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">php bin/hyperf.php start</span></pre></td></tr></table></figure>
 
-<h2 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h2><p>RDB 是 redis database 缩写。是Redis的默认持久化机制。</p>
-<p>功能核心函数 dbSave （生成RDB文件）和 rdbLoad（从文件加载内存）两个函数。</p>
-<p>快照是默认持久化方式。这种方式就是将内存中数据以快照的方式写入到二进制文件中，默认的文件名为 dump.rdb</p>
-<p>优点：</p>
-<ul>
-<li>快照保存数据极快、还原数据快</li>
-<li>适用于灾难备份</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>小内存机器不适合使用，RDB机制符合要求就会照快照</li>
-</ul>
-<p>快照条件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">1. 服务器正常关闭时  redis-cli shutdown</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">2. key满足一定条件，会进行快照</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">redis.conf</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">save 900 1    # 每900秒（15分钟）至少1个key发生变化，产生快照</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">save 300 10   # 每300秒（5分钟）至少10个key发生变化，产生快照</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">save 60 10000 # 每60秒（1分钟）至少10000个key发生变化，产生快照</span></pre></td></tr></table></figure>
+<p>浏览器访问：<a href="http://127.0.0.1:9501" target="_blank" rel="noopener">http://127.0.0.1:9501</a> OJBK ~</p>
+<p>到这里我们要解决的问题才正真开始，我们需要有MySQL去配合Hyperf。我们需要怎么做呢？</p>
+<h2 id="开始解决这个问题"><a href="#开始解决这个问题" class="headerlink" title="开始解决这个问题"></a>开始解决这个问题</h2><p>创建网络：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">docker network create hyperfdb_network</span></pre></td></tr></table></figure>
+
+<p>创建使用这个网络创建MySQL：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">docker run --name mydb --net=hyperfdb_network -p 3306:3306 -it -v $pwd/data/mysql:/var/lib/mysql:rw -v $pwd/data/mysql:/var/lib/mysql-logs:rw -v $pwd/config/mysql/conf.d:/etc/mysql/conf.d:ro -e MYSQL_ROOT_PASSWORD=123456 --restart=always -d mysql:8.0.20</span></pre></td></tr></table></figure>
+
+<p>将已存在的容器连接到mydb相同的网络</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> hyperfdb_network 是刚才创建的网络名称</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> myhyperf 是hyperf容器的名称</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">docker network connect hyperfdb_network myhyperf</span></pre></td></tr></table></figure>
+
+<p>我们进入我们 myhyperf 容器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">docker exec -it myhyperf sh</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">ping mydb</span></pre></td></tr></table></figure>
+
+<p>我们发现已经通了。</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>我们虽然是ping通了网络，但是MySQL使用不知道是否准确。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$dsn = <span class="string">"mysql:dbname=test;host=mydb"</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$db_user = <span class="string">'root'</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$db_pass = <span class="string">'123456'</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    $pdo = <span class="keyword">new</span> PDO($dsn, $db_user, $db_pass);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">echo</span> <span class="string">'连接成功'</span> . PHP_EOL;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125; <span class="keyword">catch</span> (PDOException $e) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">echo</span> <span class="string">'数据库连接失败'</span> . $e-&gt;getMessage();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
 
 
 
-<h2 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h2><p>由于快照方式实在一定间隔时间做一次，所以如果redis意外down掉的话，就会丢失最后一次快照后的所有修改。如果应用要求不能丢失任何修改的话，可以采用aof持久化方式。</p>
-<p>Append-only file：aof比快照方式有更好的持久化性，是由于在使用aof持久化方式时，redis会将每一个收到的写命令都通过write函数追加到文件中（默认是appendonly.aof）。当redis重启时会通过重新执行文件中保存的写命令来在内存中重建整个数据库的内容。</p>
-<p>每当执行服务器（定时）任务或者函数时flushAppendOnlyFile函数都会被调用，这个函数执行以下两个工作aof写入保存：</p>
-<ul>
-<li>WRITE：根据条件，将aof_buf中的缓存写入到AOF文件中</li>
-<li>SAVE：根据条件，调用fsync或fdatasync函数，将AOF文件保存到磁盘中</li>
-</ul>
-<p>有三种方式如下（默认是：每秒fsync一次）</p>
-<ul>
-<li>appendonly yes  启用aof持久化模式</li>
-<li><code>appendfsync &lt;parameter&gt;</code><ul>
-<li>always 收到写命令就立刻写入磁盘，最慢，但保证完全的持久化</li>
-<li>everysec 每秒钟写入磁盘一次，在性能和持久化方面做了很好的折中</li>
-<li>no 完全依赖os，性能最好，持久化没保证</li>
-</ul>
-</li>
-</ul>
-<h3 id="产生的问题："><a href="#产生的问题：" class="headerlink" title="产生的问题："></a>产生的问题：</h3><p>aof的方式也同时带来了另一个问题。持久化文件会变得越来越大。例如我们调用incr test命令100次，文件中必须保存全部的100条命令，其实有99条都是多余的。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>开启配置之后，我们已经拥有了比较健全的持久化方案了。具体的调整还是要看具体的业务需求了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Docker做开发环境还是挺舒服的。快速搭建就开始学习写代码了。</p>
 
     </div>
 
@@ -318,7 +285,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Redis/" rel="tag"># Redis</a>
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
           </div>
 
         
@@ -327,13 +294,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/04/14/2020-04-14-Redis-%E4%BA%8B%E5%8A%A1%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%8B/" rel="prev" title="Redis 事务了解一下">
-      <i class="fa fa-chevron-left"></i> Redis 事务了解一下
+    <a href="/2020/04/29/2020-04-29-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" rel="prev" title="设计模式之抽象工厂模式">
+      <i class="fa fa-chevron-left"></i> 设计模式之抽象工厂模式
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/04/16/2020-04-16-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%88%9D%E6%8E%A2/" rel="next" title="设计模式初探">
-      设计模式初探 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -378,7 +342,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RDB"><span class="nav-number">3.</span> <span class="nav-text">RDB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOF"><span class="nav-number">4.</span> <span class="nav-text">AOF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#产生的问题："><span class="nav-number">4.1.</span> <span class="nav-text">产生的问题：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行-Docker-Hyperf"><span class="nav-number">2.</span> <span class="nav-text">运行 Docker Hyperf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始解决这个问题"><span class="nav-number">3.</span> <span class="nav-text">开始解决这个问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">4.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -575,9 +539,9 @@ window.addEventListener('pjax:success', () => {
       DISQUS.reset({
         reload: true,
         config: {page: {
-            url: "http://neilyoz.github.io/2020/04/15/2020-04-15-Redis-%E6%8C%81%E4%B9%85%E5%8C%96/",
-            identifier: "2020/04/15/2020-04-15-Redis-持久化/",
-            title: "Redis 持久化"
+            url: "http://neilyoz.github.io/2020/05/30/2020-05-30-Docker-%E5%AE%B9%E5%99%A8%E4%BA%92%E7%9B%B8%E8%BF%9E%E6%8E%A5/",
+            identifier: "2020/05/30/2020-05-30-Docker-容器互相连接/",
+            title: "Docker 容器互相连接"
           }
         }
       });
