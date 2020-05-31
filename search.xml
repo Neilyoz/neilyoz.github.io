@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>2020-05-31-MySQL-8-Laravel数据库连接失败</title>
+      <link href="/2020/05/31/2020-05-31-MySQL-8-Laravel%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5/"/>
+      <url>/2020/05/31/2020-05-31-MySQL-8-Laravel%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>娘希匹的~ 懒得装环境直接 Docker 了一个 MySQL 最新版，版本是 8 来着。结果我用 Navicat 连接成功，满心欢喜的以为 OJBK 了。结果换 Laravel 去 migrate 时结果肯定时不行吖。</p><h2 id="为什么不行？"><a href="#为什么不行？" class="headerlink" title="为什么不行？"></a>为什么不行？</h2><p>标题有点开车的感觉，真实的刺激哈哈哈。因为 MySQL8 的密码加密方式换成了 <code>caching_sha2_password</code> 而我们的 PDO 貌似还不支持这种方式。所以只能是使用下面的命令进行降级了。将 <code>caching_sha2_password</code> 降级成为 <code>mysql_native_password</code>。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">ALTER USER &#39;root&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;&#123;此处替换新的密码&#125;&#39;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">FLUSH PRIVILEGES;</span></pre></td></tr></table></figure><p>为什么是 PDO 问题呢？我在使用 Golang 的数据库时候并不会出现这个问题，而 PHP PDO 连接的时候就哎。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>谁让你 PHP 是世界上最好的语言呢？这么多新语言，我还是爱你的 PHP。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> MySQL </category>
+          
+          <category> PHP </category>
+          
+          <category> Laravel </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> PHP </tag>
+            
+            <tag> Laravel </tag>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Docker 容器互相连接</title>
       <link href="/2020/05/30/2020-05-30-Docker-%E5%AE%B9%E5%99%A8%E4%BA%92%E7%9B%B8%E8%BF%9E%E6%8E%A5/"/>
       <url>/2020/05/30/2020-05-30-Docker-%E5%AE%B9%E5%99%A8%E4%BA%92%E7%9B%B8%E8%BF%9E%E6%8E%A5/</url>

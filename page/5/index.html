@@ -187,6 +187,112 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">JavaScript设计模式——原型模式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-04 18:29:53" itemprop="dateCreated datePublished" datetime="2020-03-04T18:29:53+08:00">2020-03-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-30 14:07:39" itemprop="dateModified" datetime="2020-05-30T14:07:39+08:00">2020-05-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/04/JavaScript设计模式——原型模式/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>原型模式的定义</p>
+<blockquote>
+<p>用原型实例指向创建对象的类，使用于创建新的对象的类共享原型对象的属性以及方法。</p>
+</blockquote>
+<p>使用场景：</p>
+<blockquote>
+<p>创建新的对象的类共享原型对象的属性以及方法，多以继承来呈现。</p>
+</blockquote>
+<p>我们可以通过 JavaScript 特有的原型继承特性去实现原型模式，也就是创建一个对象作为另一个对象的 prototype 属性值，可以通过 Object.create(prototype, optionalDescriptorObjects)来实现原型继承。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> someAnimal = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  name: <span class="string">"喵星人"</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  eat: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用Object.create创建一个新的动物</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> anotherAnimal = <span class="built_in">Object</span>.create(someAnimal, &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">  eat: &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">      <span class="built_in">console</span>.log(<span class="string">"吃骨头"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">&#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">anotherAnimal.name = <span class="string">"汪星人"</span>;</span></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/03/04/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -218,7 +324,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
+                <time title="修改时间：2020-05-30 14:07:39" itemprop="dateModified" datetime="2020-05-30T14:07:39+08:00">2020-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -324,7 +430,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
+                <time title="修改时间：2020-05-30 14:07:38" itemprop="dateModified" datetime="2020-05-30T14:07:38+08:00">2020-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -438,7 +544,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
+                <time title="修改时间：2020-05-30 14:07:38" itemprop="dateModified" datetime="2020-05-30T14:07:38+08:00">2020-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -549,7 +655,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
+                <time title="修改时间：2020-05-30 14:07:39" itemprop="dateModified" datetime="2020-05-30T14:07:39+08:00">2020-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -660,7 +766,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-29 22:23:54" itemprop="dateModified" datetime="2020-04-29T22:23:54+08:00">2020-04-29</time>
+                <time title="修改时间：2020-05-30 14:07:38" itemprop="dateModified" datetime="2020-05-30T14:07:38+08:00">2020-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -781,14 +887,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

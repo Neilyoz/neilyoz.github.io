@@ -187,6 +187,107 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/05/31/2020-05-31-MySQL-8-Laravel%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/31/2020-05-31-MySQL-8-Laravel%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5/" class="post-title-link" itemprop="url">2020-05-31-MySQL-8-Laravel数据库连接失败</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-31 11:27:04 / 修改时间：11:37:30" itemprop="dateCreated datePublished" datetime="2020-05-31T11:27:04+08:00">2020-05-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/PHP/Laravel/" itemprop="url" rel="index">
+                    <span itemprop="name">Laravel</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/05/31/2020-05-31-MySQL-8-Laravel%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/05/31/2020-05-31-MySQL-8-Laravel数据库连接失败/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>娘希匹的~ 懒得装环境直接 Docker 了一个 MySQL 最新版，版本是 8 来着。结果我用 Navicat 连接成功，满心欢喜的以为 OJBK 了。结果换 Laravel 去 migrate 时结果肯定时不行吖。</p>
+<h2 id="为什么不行？"><a href="#为什么不行？" class="headerlink" title="为什么不行？"></a>为什么不行？</h2><p>标题有点开车的感觉，真实的刺激哈哈哈。因为 MySQL8 的密码加密方式换成了 <code>caching_sha2_password</code> 而我们的 PDO 貌似还不支持这种方式。所以只能是使用下面的命令进行降级了。将 <code>caching_sha2_password</code> 降级成为 <code>mysql_native_password</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">ALTER USER &#39;root&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;&#123;此处替换新的密码&#125;&#39;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">FLUSH PRIVILEGES;</span></pre></td></tr></table></figure>
+
+<p>为什么是 PDO 问题呢？我在使用 Golang 的数据库时候并不会出现这个问题，而 PHP PDO 连接的时候就哎。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>谁让你 PHP 是世界上最好的语言呢？这么多新语言，我还是爱你的 PHP。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/05/30/2020-05-30-Docker-%E5%AE%B9%E5%99%A8%E4%BA%92%E7%9B%B8%E8%BF%9E%E6%8E%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -212,7 +313,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-05-30 11:46:21 / 修改时间：13:51:59" itemprop="dateCreated datePublished" datetime="2020-05-30T11:46:21+08:00">2020-05-30</time>
+              <time title="创建时间：2020-05-30 11:46:21 / 修改时间：14:07:39" itemprop="dateCreated datePublished" datetime="2020-05-30T11:46:21+08:00">2020-05-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -326,7 +427,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-30 13:59:11" itemprop="dateModified" datetime="2020-05-30T13:59:11+08:00">2020-05-30</time>
+                <time title="修改时间：2020-05-30 14:07:39" itemprop="dateModified" datetime="2020-05-30T14:07:39+08:00">2020-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -417,10 +518,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-04-29 22:12:23 / 修改时间：22:23:55" itemprop="dateCreated datePublished" datetime="2020-04-29T22:12:23+08:00">2020-04-29</time>
+              <time title="创建时间：2020-04-29 22:12:23" itemprop="dateCreated datePublished" datetime="2020-04-29T22:12:23+08:00">2020-04-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-30 14:07:38" itemprop="dateModified" datetime="2020-05-30T14:07:38+08:00">2020-05-30</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -517,7 +624,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
+                <time title="修改时间：2020-05-30 14:07:38" itemprop="dateModified" datetime="2020-05-30T14:07:38+08:00">2020-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -620,7 +727,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
+                <time title="修改时间：2020-05-30 14:07:38" itemprop="dateModified" datetime="2020-05-30T14:07:38+08:00">2020-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -723,7 +830,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
+                <time title="修改时间：2020-05-30 14:07:38" itemprop="dateModified" datetime="2020-05-30T14:07:38+08:00">2020-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -822,7 +929,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
+                <time title="修改时间：2020-05-30 14:07:38" itemprop="dateModified" datetime="2020-05-30T14:07:38+08:00">2020-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -921,7 +1028,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
+                <time title="修改时间：2020-05-30 14:07:38" itemprop="dateModified" datetime="2020-05-30T14:07:38+08:00">2020-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1029,7 +1136,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
+                <time title="修改时间：2020-05-30 14:07:38" itemprop="dateModified" datetime="2020-05-30T14:07:38+08:00">2020-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1074,113 +1181,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/04/17/2020-04-17-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8BUML%E7%B1%BB%E5%9B%BE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/04/16/2020-04-16-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%88%9D%E6%8E%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
-      <meta itemprop="name" content="Neilyoz">
-      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neilyozの鱼不浪">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/16/2020-04-16-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%88%9D%E6%8E%A2/" class="post-title-link" itemprop="url">设计模式初探</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-16 12:48:12" itemprop="dateCreated datePublished" datetime="2020-04-16T12:48:12+08:00">2020-04-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-29 22:23:55" itemprop="dateModified" datetime="2020-04-29T22:23:55+08:00">2020-04-29</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/04/16/2020-04-16-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%88%9D%E6%8E%A2/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/16/2020-04-16-设计模式初探/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>设计模式作为一个程序员，相信大家肯定不会陌生，它是一些成熟的且通用的程序设计解决方案，针对这些肯定会存在一些理论基础，来为这些这些模式提供理论依据，这里我们就要先搞明白这些理论到底是什么，这样我们对设计模式有事半功倍的效果。</p>
-<p>设计模式的基本原则：</p>
-<ol>
-<li>单一职责原则</li>
-<li>开闭原则</li>
-<li>里式替换原则</li>
-<li>依赖倒转原则</li>
-<li>接口隔离原则</li>
-<li>合成复用原则</li>
-<li>迪米特法则</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/16/2020-04-16-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%88%9D%E6%8E%A2/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1250,14 +1250,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

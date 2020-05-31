@@ -47,17 +47,18 @@
   };
 </script>
 
-  <meta name="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
-<meta name="keywords" content="JavaScript,PHPer,Software">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Neilyozの鱼不浪">
-<meta property="og:url" content="http:&#x2F;&#x2F;neilyoz.github.io&#x2F;tags&#x2F;Golang&#x2F;index.html">
+  <meta name="description" content="前言娘希匹的~ 懒得装环境直接 Docker 了一个 MySQL 最新版，版本是 8 来着。结果我用 Navicat 连接成功，满心欢喜的以为 OJBK 了。结果换 Laravel 去 migrate 时结果肯定时不行吖。 为什么不行？标题有点开车的感觉，真实的刺激哈哈哈。因为 MySQL8 的密码加密方式换成了 caching_sha2_password 而我们的 PDO 貌似还不支持这种方式。">
+<meta name="keywords" content="PHP,Laravel,MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2020-05-31-MySQL-8-Laravel数据库连接失败">
+<meta property="og:url" content="http:&#x2F;&#x2F;neilyoz.github.io&#x2F;2020&#x2F;05&#x2F;31&#x2F;2020-05-31-MySQL-8-Laravel%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5&#x2F;index.html">
 <meta property="og:site_name" content="Neilyozの鱼不浪">
-<meta property="og:description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+<meta property="og:description" content="前言娘希匹的~ 懒得装环境直接 Docker 了一个 MySQL 最新版，版本是 8 来着。结果我用 Navicat 连接成功，满心欢喜的以为 OJBK 了。结果换 Laravel 去 migrate 时结果肯定时不行吖。 为什么不行？标题有点开车的感觉，真实的刺激哈哈哈。因为 MySQL8 的密码加密方式换成了 caching_sha2_password 而我们的 PDO 貌似还不支持这种方式。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-05-31T03:37:30.281Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://neilyoz.github.io/tags/Golang/">
+<link rel="canonical" href="http://neilyoz.github.io/2020/05/31/2020-05-31-MySQL-8-Laravel%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5/">
 
 
 <script id="page-configurations">
@@ -65,13 +66,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>标签: Golang | Neilyozの鱼不浪</title>
+  <title>2020-05-31-MySQL-8-Laravel数据库连接失败 | Neilyozの鱼不浪</title>
   
 
 
@@ -182,74 +183,136 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">Golang
-          <small>标签</small>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://neilyoz.github.io/2020/05/31/2020-05-31-MySQL-8-Laravel%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/8af5d004cfdb27768ddac610ba87b41d?s=80">
+      <meta itemprop="name" content="Neilyoz">
+      <meta itemprop="description" content="分享一些软件开发的经验，以及交流软件开发经验的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neilyozの鱼不浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          2020-05-31-MySQL-8-Laravel数据库连接失败
         </h2>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-31 11:27:04 / 修改时间：11:37:30" itemprop="dateCreated datePublished" datetime="2020-05-31T11:27:04+08:00">2020-05-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/PHP/Laravel/" itemprop="url" rel="index">
+                    <span itemprop="name">Laravel</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/05/31/2020-05-31-MySQL-8-Laravel%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/05/31/2020-05-31-MySQL-8-Laravel数据库连接失败/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h2 class="collection-header">2020</h2>
-    </div>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>娘希匹的~ 懒得装环境直接 Docker 了一个 MySQL 最新版，版本是 8 来着。结果我用 Navicat 连接成功，满心欢喜的以为 OJBK 了。结果换 Laravel 去 migrate 时结果肯定时不行吖。</p>
+<h2 id="为什么不行？"><a href="#为什么不行？" class="headerlink" title="为什么不行？"></a>为什么不行？</h2><p>标题有点开车的感觉，真实的刺激哈哈哈。因为 MySQL8 的密码加密方式换成了 <code>caching_sha2_password</code> 而我们的 PDO 貌似还不支持这种方式。所以只能是使用下面的命令进行降级了。将 <code>caching_sha2_password</code> 降级成为 <code>mysql_native_password</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">ALTER USER &#39;root&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;&#123;此处替换新的密码&#125;&#39;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">FLUSH PRIVILEGES;</span></pre></td></tr></table></figure>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-05-13T23:10:07+08:00"
-              content="2020-05-13">
-          05-13
-        </time>
-      </div>
-
-      <h3 class="post-title">
-          <a class="post-title-link" href="/2020/05/13/2020-05-13-Golang%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/" itemprop="url">
-            <span itemprop="name">Golang并发控制</span>
-          </a>
-      </h3>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-10T21:18:14+08:00"
-              content="2020-03-10">
-          03-10
-        </time>
-      </div>
-
-      <h3 class="post-title">
-          <a class="post-title-link" href="/2020/03/10/Vue-Gin-Gorm%E9%9A%8F%E4%BE%BF%E8%AF%B4/" itemprop="url">
-            <span itemprop="name">Vue + Gin + Gorm 随便说</span>
-          </a>
-      </h3>
-
-    </header>
-  </article>
+<p>为什么是 PDO 问题呢？我在使用 Golang 的数据库时候并不会出现这个问题，而 PHP PDO 连接的时候就哎。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>谁让你 PHP 是世界上最好的语言呢？这么多新语言，我还是爱你的 PHP。</p>
 
     </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PHP/" rel="tag"># PHP</a>
+              <a href="/tags/Laravel/" rel="tag"># Laravel</a>
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/30/2020-05-30-Docker-%E5%AE%B9%E5%99%A8%E4%BA%92%E7%9B%B8%E8%BF%9E%E6%8E%A5/" rel="prev" title="Docker 容器互相连接">
+      <i class="fa fa-chevron-left"></i> Docker 容器互相连接
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
 
         </div>
           
@@ -274,6 +337,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么不行？"><span class="nav-number">2.</span> <span class="nav-text">为什么不行？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -461,6 +525,27 @@ window.addEventListener('pjax:success', () => {
   }
   // defer loading until the whole page loading is completed
   window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: {page: {
+            url: "http://neilyoz.github.io/2020/05/31/2020-05-31-MySQL-8-Laravel%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5/",
+            identifier: "2020/05/31/2020-05-31-MySQL-8-Laravel数据库连接失败/",
+            title: "2020-05-31-MySQL-8-Laravel数据库连接失败"
+          }
+        }
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://neilyoz.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
 </script>
 
     </div>
