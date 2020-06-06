@@ -4,11 +4,36 @@
   
     
     <entry>
+      <title>Ubuntu更新PHP版本</title>
+      <link href="/2020/06/06/2020-06-06-Ubuntu%E6%9B%B4%E6%96%B0PHP%E7%89%88%E6%9C%AC/"/>
+      <url>/2020/06/06/2020-06-06-Ubuntu%E6%9B%B4%E6%96%B0PHP%E7%89%88%E6%9C%AC/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>都 2020 年了，PHP 版本都出到了 7.4.6。可是服务器上的 PHP 还是 7.1。对于我这个喜欢最新版本的人来说简直是不能忍受。怎么办？干！</p><h2 id="安装-PHP-相关"><a href="#安装-PHP-相关" class="headerlink" title="安装 PHP 相关"></a>安装 PHP 相关</h2><p>公司环境有专门的运维，编译安装无可厚非。我们自己就没有必要折腾自己，又没啥特殊的服务要求，整那么多幺蛾子也没必要。直接添加源搞起来。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install software-properties-common</span><br><span class="line">sudo add-apt-repository ppa:ondrej/php</span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装</span></span><br><span class="line">sudo apt-get install php7.4 php7.4-fpm php7.4-mysql php7.4-gd php7.4-mbstring php7.4-bcmath php7.4-sqlite3 php7.4-cli php7.4-soap</span><br><span class="line"><span class="meta">#</span><span class="bash"> 启动</span></span><br><span class="line">sudo service php7.4-fpm start</span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启</span></span><br><span class="line">sudo service php7.4-fpm restart</span><br><span class="line"><span class="meta">#</span><span class="bash"> 停止</span></span><br><span class="line">sudo service php7.4-fpm stop</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进行默认的版本选择</span></span><br><span class="line">update-alternatives --config php</span><br></pre></td></tr></table></figure><p>基本这样就完事儿了。剩下就是调整 nginxu 对应的 <code>fastcgi_pass</code> 参数，让 PHP 处理对应的请求就好了。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>别和我说什么不是编译安装不高级，特么的技术为的是解决问题，我的需求是快速搭建，没有什么特殊的管理需要，点到为止。而且现在服务器多数都是用 Docker 了。这种直接安装的无非就是一些老项目要迁移版本升级而已。简单实用快速就是王道。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> PHP </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> PHP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MySQL8 Laravel数据库连接失败</title>
       <link href="/2020/05/31/2020-05-31-MySQL-8-Laravel%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5/"/>
       <url>/2020/05/31/2020-05-31-MySQL-8-Laravel%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5/</url>
       
-        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>娘希匹的~ 懒得装环境直接 Docker 了一个 MySQL 最新版，版本是 8 来着。结果我用 Navicat 连接成功，满心欢喜的以为 OJBK 了。结果换 Laravel 去 migrate 时结果肯定时不行吖。</p><h2 id="为什么不行？"><a href="#为什么不行？" class="headerlink" title="为什么不行？"></a>为什么不行？</h2><p>标题有点开车的感觉，真实的刺激哈哈哈。因为 MySQL8 的密码加密方式换成了 <code>caching_sha2_password</code> 而我们的 PDO 貌似还不支持这种方式。所以只能是使用下面的命令进行降级了。将 <code>caching_sha2_password</code> 降级成为 <code>mysql_native_password</code>。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">ALTER USER &#39;root&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;&#123;此处替换新的密码&#125;&#39;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">FLUSH PRIVILEGES;</span></pre></td></tr></table></figure><p>为什么是 PDO 问题呢？我在使用 Golang 的数据库时候并不会出现这个问题，而 PHP PDO 连接的时候就哎。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>谁让你 PHP 是世界上最好的语言呢？这么多新语言，我还是爱你的 PHP。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>娘希匹的~ 懒得装环境直接 Docker 了一个 MySQL 最新版，版本是 8 来着。结果我用 Navicat 连接成功，满心欢喜的以为 OJBK 了。结果换 Laravel 去 migrate 时结果肯定时不行吖。</p><h2 id="为什么不行？"><a href="#为什么不行？" class="headerlink" title="为什么不行？"></a>为什么不行？</h2><p>标题有点开车的感觉，真实的刺激哈哈哈。因为 MySQL8 的密码加密方式换成了 <code>caching_sha2_password</code> 而我们的 PDO 貌似还不支持这种方式。所以只能是使用下面的命令进行降级了。将 <code>caching_sha2_password</code> 降级成为 <code>mysql_native_password</code>。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER &#39;root&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;&#123;此处替换新的密码&#125;&#39;;</span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure><p>为什么是 PDO 问题呢？我在使用 Golang 的数据库时候并不会出现这个问题，而 PHP PDO 连接的时候就哎。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>谁让你 PHP 是世界上最好的语言呢？这么多新语言，我还是爱你的 PHP。</p>]]></content>
       
       
       <categories>

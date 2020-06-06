@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
+<meta name="generator" content="Hexo 4.2.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -48,14 +48,17 @@
 </script>
 
   <meta name="description" content="前言有了之前的注解内容，要搭配 Java 反射就能给注解注入灵魂了。 Java Reflection——反射基础概念 Reflecttion（反射）是 Java 被视为动态语言的关键，反射机制允许程序在执行期借助于 Reflection API 取地任何类的内部信息，并且直接操作任意对象的内部属性及方法。 加载完类之后，在堆内存的方法中就产生了一个 Class 类型的对象（一个类只有一个 Clas">
-<meta name="keywords" content="Java,反射">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 反射笔记">
-<meta property="og:url" content="http:&#x2F;&#x2F;neilyoz.github.io&#x2F;2020&#x2F;04&#x2F;04&#x2F;Java-%E5%8F%8D%E5%B0%84%E7%AC%94%E8%AE%B0&#x2F;index.html">
+<meta property="og:url" content="http://neilyoz.github.io/2020/04/04/Java-%E5%8F%8D%E5%B0%84%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Neilyozの鱼不浪">
 <meta property="og:description" content="前言有了之前的注解内容，要搭配 Java 反射就能给注解注入灵魂了。 Java Reflection——反射基础概念 Reflecttion（反射）是 Java 被视为动态语言的关键，反射机制允许程序在执行期借助于 Reflection API 取地任何类的内部信息，并且直接操作任意对象的内部属性及方法。 加载完类之后，在堆内存的方法中就产生了一个 Class 类型的对象（一个类只有一个 Clas">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-05-30T06:07:39.059Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-04T03:30:16.000Z">
+<meta property="article:modified_time" content="2020-05-30T06:07:39.059Z">
+<meta property="article:author" content="Neilyoz">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="反射">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://neilyoz.github.io/2020/04/04/Java-%E5%8F%8D%E5%B0%84%E7%AC%94%E8%AE%B0/">
@@ -619,7 +622,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -663,7 +666,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Neilyoz</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.1
   </div>
   <span class="post-meta-divider">|</span>
   <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
@@ -688,9 +691,17 @@
   <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
   <script>
 var pjax = new Pjax({
   selectors: [

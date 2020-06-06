@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
+<meta name="generator" content="Hexo 4.2.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -48,17 +48,19 @@
 </script>
 
   <meta name="description" content="实现原理: MySQL支持单项、异步复制，复制过程中一个服务器充当主服务器，而一个或多个其他服务器充当从服务器。 MySQL复制基于主服务器在二进制日志中跟踪所有对数据库的更改（更新、删除等等） 每个从服务器从主服务器接收主服务器已经记录到其二进制日志的保存更新。  实现步骤： Master将改变记录到二进制日志（binary log）中 Slave将Master的binary log event">
-<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL主从复制配置">
-<meta property="og:url" content="http:&#x2F;&#x2F;neilyoz.github.io&#x2F;2020&#x2F;03&#x2F;11&#x2F;MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%85%8D%E7%BD%AE&#x2F;index.html">
+<meta property="og:url" content="http://neilyoz.github.io/2020/03/11/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%85%8D%E7%BD%AE/index.html">
 <meta property="og:site_name" content="Neilyozの鱼不浪">
 <meta property="og:description" content="实现原理: MySQL支持单项、异步复制，复制过程中一个服务器充当主服务器，而一个或多个其他服务器充当从服务器。 MySQL复制基于主服务器在二进制日志中跟踪所有对数据库的更改（更新、删除等等） 每个从服务器从主服务器接收主服务器已经记录到其二进制日志的保存更新。  实现步骤： Master将改变记录到二进制日志（binary log）中 Slave将Master的binary log event">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;oscimg.oschina.net&#x2F;oscnet&#x2F;8f7e2a97ec247fadc24443e5f6a58c466e0.jpg">
-<meta property="og:updated_time" content="2020-05-30T06:07:39.144Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/8f7e2a97ec247fadc24443e5f6a58c466e0.jpg">
+<meta property="article:published_time" content="2020-03-11T05:24:47.000Z">
+<meta property="article:modified_time" content="2020-05-30T06:07:39.144Z">
+<meta property="article:author" content="Neilyoz">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;oscimg.oschina.net&#x2F;oscnet&#x2F;8f7e2a97ec247fadc24443e5f6a58c466e0.jpg">
+<meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/8f7e2a97ec247fadc24443e5f6a58c466e0.jpg">
 
 <link rel="canonical" href="http://neilyoz.github.io/2020/03/11/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%85%8D%E7%BD%AE/">
 
@@ -379,7 +381,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -423,7 +425,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Neilyoz</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.1
   </div>
   <span class="post-meta-divider">|</span>
   <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
@@ -448,9 +450,17 @@
   <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
   <script>
 var pjax = new Pjax({
   selectors: [

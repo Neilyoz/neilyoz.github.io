@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
+<meta name="generator" content="Hexo 4.2.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -48,14 +48,16 @@
 </script>
 
   <meta name="description" content="前言一个一个例子来，获取最大值max的优化。求数据的最大值，说实在话在我们的实际开发中还是挺好用的。可能数据表一万两万的时候不是很看的出来性能，但是任何东西都顶不住数量多啊。为了模拟这个数量多的环境，不废话，贴出代码，方便大家。">
-<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL最大值Max的优化">
-<meta property="og:url" content="http:&#x2F;&#x2F;neilyoz.github.io&#x2F;2020&#x2F;03&#x2F;08&#x2F;MySQL%E6%9C%80%E5%A4%A7%E5%80%BCMax%E7%9A%84%E4%BC%98%E5%8C%96&#x2F;index.html">
+<meta property="og:url" content="http://neilyoz.github.io/2020/03/08/MySQL%E6%9C%80%E5%A4%A7%E5%80%BCMax%E7%9A%84%E4%BC%98%E5%8C%96/index.html">
 <meta property="og:site_name" content="Neilyozの鱼不浪">
 <meta property="og:description" content="前言一个一个例子来，获取最大值max的优化。求数据的最大值，说实在话在我们的实际开发中还是挺好用的。可能数据表一万两万的时候不是很看的出来性能，但是任何东西都顶不住数量多啊。为了模拟这个数量多的环境，不废话，贴出代码，方便大家。">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-05-30T06:07:39.204Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-07T18:16:04.000Z">
+<meta property="article:modified_time" content="2020-05-30T06:07:39.204Z">
+<meta property="article:author" content="Neilyoz">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://neilyoz.github.io/2020/03/08/MySQL%E6%9C%80%E5%A4%A7%E5%80%BCMax%E7%9A%84%E4%BC%98%E5%8C%96/">
@@ -354,7 +356,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -398,7 +400,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Neilyoz</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.1
   </div>
   <span class="post-meta-divider">|</span>
   <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
@@ -423,9 +425,17 @@
   <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
   <script>
 var pjax = new Pjax({
   selectors: [

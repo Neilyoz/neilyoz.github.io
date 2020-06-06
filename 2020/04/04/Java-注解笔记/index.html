@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
+<meta name="generator" content="Hexo 4.2.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -48,14 +48,16 @@
 </script>
 
   <meta name="description" content="前言之前我常用的语言是 PHP，受限于语言特性，说实话 PHP 被很多公司边缘化了，感觉后面发展空间和路子并不是很大，加上很多解决方案还是 Java 的比较多，且资料更加健全，我一头扎入了 Java 的学习中。 注解和反射在我们在现在的框架中常常看到，查看框架的底层也会发现反射的身影，如果我们不了解这些通用的方法，显然有点说不过去。边学边记录，记录自己的学习路线。 注解基本概念 Annotatio">
-<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 注解笔记">
-<meta property="og:url" content="http:&#x2F;&#x2F;neilyoz.github.io&#x2F;2020&#x2F;04&#x2F;04&#x2F;Java-%E6%B3%A8%E8%A7%A3%E7%AC%94%E8%AE%B0&#x2F;index.html">
+<meta property="og:url" content="http://neilyoz.github.io/2020/04/04/Java-%E6%B3%A8%E8%A7%A3%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Neilyozの鱼不浪">
 <meta property="og:description" content="前言之前我常用的语言是 PHP，受限于语言特性，说实话 PHP 被很多公司边缘化了，感觉后面发展空间和路子并不是很大，加上很多解决方案还是 Java 的比较多，且资料更加健全，我一头扎入了 Java 的学习中。 注解和反射在我们在现在的框架中常常看到，查看框架的底层也会发现反射的身影，如果我们不了解这些通用的方法，显然有点说不过去。边学边记录，记录自己的学习路线。 注解基本概念 Annotatio">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-05-30T06:07:39.089Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-03T16:19:06.000Z">
+<meta property="article:modified_time" content="2020-05-30T06:07:39.089Z">
+<meta property="article:author" content="Neilyoz">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://neilyoz.github.io/2020/04/04/Java-%E6%B3%A8%E8%A7%A3%E7%AC%94%E8%AE%B0/">
@@ -498,7 +500,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -542,7 +544,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Neilyoz</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.1
   </div>
   <span class="post-meta-divider">|</span>
   <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
@@ -567,9 +569,17 @@
   <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
   <script>
 var pjax = new Pjax({
   selectors: [

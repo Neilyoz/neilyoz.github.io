@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
+<meta name="generator" content="Hexo 4.2.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -48,14 +48,17 @@
 </script>
 
   <meta name="description" content="前言前面我们已经演示了一对一，一对多，多对多的关系这三种是日常工作中很常见的关联关系，我们会介绍更加复杂的关联关系，分别是远层一对多和多态关联。 远层一对多关联远层一对多在一对多关联的基础上加上了一个修饰词【远层】，意味着这个一对多关系不是直接关联，而是【远层】关联，远层关联需要借助中间表，前面我们讨论多对多关联也是借助中间表，但是远层一对多与其区别在于还是一对多的关联。 理论和实例结合才容易理解">
-<meta name="keywords" content="PHP,Laravel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Laravel Eloquent 模型关联关系（二）">
-<meta property="og:url" content="http:&#x2F;&#x2F;neilyoz.github.io&#x2F;2020&#x2F;04&#x2F;11&#x2F;2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%BA%8C%EF%BC%89&#x2F;index.html">
+<meta property="og:url" content="http://neilyoz.github.io/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
 <meta property="og:site_name" content="Neilyozの鱼不浪">
 <meta property="og:description" content="前言前面我们已经演示了一对一，一对多，多对多的关系这三种是日常工作中很常见的关联关系，我们会介绍更加复杂的关联关系，分别是远层一对多和多态关联。 远层一对多关联远层一对多在一对多关联的基础上加上了一个修饰词【远层】，意味着这个一对多关系不是直接关联，而是【远层】关联，远层关联需要借助中间表，前面我们讨论多对多关联也是借助中间表，但是远层一对多与其区别在于还是一对多的关联。 理论和实例结合才容易理解">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-05-30T06:07:38.788Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-11T08:47:12.000Z">
+<meta property="article:modified_time" content="2020-05-30T06:07:38.788Z">
+<meta property="article:author" content="Neilyoz">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Laravel">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://neilyoz.github.io/2020/04/11/2020-04-11-Laravel-Eloquent-%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%EF%BC%88%E4%BA%8C%EF%BC%89/">
@@ -500,7 +503,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -544,7 +547,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Neilyoz</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.1
   </div>
   <span class="post-meta-divider">|</span>
   <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
@@ -569,9 +572,17 @@
   <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
   <script>
 var pjax = new Pjax({
   selectors: [
